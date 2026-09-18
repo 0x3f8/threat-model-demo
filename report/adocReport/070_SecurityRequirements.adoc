@@ -1,0 +1,11 @@
+= Security Requirements
+This chapter lists the custom security requirements which have been defined for the modeled target.
+
+
+PHI/PII::
+  Usage of PHI/PII is not allowed in this application.  The application should not be used to process any sensitive data.
+
+
+
+
+_This list is not complete and regulatory or law relevant security requirements have to be taken into account as well. Also custom individual security requirements might exist for the project._

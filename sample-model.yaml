@@ -1,0 +1,189 @@
+threagile_version: 1.0.0
+title: Greeting Application
+
+date: 2026-01-01
+
+author:
+  name: Alice Example
+
+management_summary_comment: >
+  Just a sample app to demonstrate threat modeling of an API Endpoint
+
+business_criticality: critical
+
+business_overview:
+  description: Just an API endpoint for Hello World.  Nothing could go wrong at all, could it?
+
+technical_overview:
+  description: > 
+    This API endpoint listens on port 8081 at the route /helloWorld,
+    accepts a json payload with a name, and returns a greeting.
+    It is implemented in Python using the built-in HTTPServer class.
+
+security_requirements:
+  PHI/PII: Usage of PHI/PII is not allowed in this application.  The application should not be used to process any sensitive data.
+
+# Tags can be used for anything, it's just a tag. Also risk rules can act based on tags if you like.
+# Tags can be used for example to name the products used (which is more concrete than the technology types that only specify the type)
+tags_available:
+  - python
+  - httpserver
+  - apiendpoint
+  - jsonpayload
+  - basicauth
+  - webserver
+  - linux
+  - ubuntu
+  - internal
+  - edge
+  - remoteaccess
+  - ssh
+
+data_assets:
+
+  JSON Request:
+    id: json-request
+    description: Payload for the request/response exchange
+    type: data 
+    usage: business # values: business, devops
+    tags: 
+      - jsonpayload
+    origin: Untrusted Clients
+    owner: Alice's Development Team
+    quantity: very-few
+    confidentiality: public # values: public, internal, restricted, confidential, strictly-confidential
+    integrity: critical # values: archive, operational, important, critical, mission-critical
+    availability: operational # values: archive, operational, important, critical, mission-critical
+    justification_cia_rating: We're just doing hello world, so no need for any special CIA ratings here.
+
+  JSON Response:
+    id: json-response
+    description: Payload for the request/response exchange
+    type: data
+    usage: business
+    tags:
+      - jsonpayload
+    origin: python-http-server
+    quantity: very-few
+    confidentiality: public
+    integrity: critical
+    availability: operational
+    justification_cia_rating: >
+      We're just responding to the request so we might assume
+      nothing we send back to the client is dangerous.
+      Is that a fair assumption?
+
+
+
+technical_assets:
+
+  Python HTTP Service:
+    id: python-http-service
+    description: The python HTTP server that implements the /helloWorld endpoint
+    type: process # values: external-entity, process, datastore
+    usage: business # values: business, devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope:
+    size: application # values: system, service, application, component
+    technology: web-service-rest # values: see help
+    tags:
+      - httpserver
+      - python
+      - apiendpoint
+    internet: true
+    machine: virtual # values: physical, virtual, container, serverless
+    encryption: none # values: none, transparent, data-with-symmetric-shared-key, data-with-asymmetric-shared-key, data-with-enduser-individual-key
+    owner: Alice's Development Team
+    confidentiality: strictly-confidential # values: public, internal, restricted, confidential, strictly-confidential
+    integrity: critical # values: archive, operational, important, critical, mission-critical
+    availability: operational # values: archive, operational, important, critical, mission-critical
+    justification_cia_rating: >
+      We said it's just a hello world API, so no need for any special CIA ratings here.
+      At the same time, the service runs on our server and nobody should be able to access the server without authorization
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed: # sequence of IDs to reference
+      - json-request
+    data_assets_stored: # sequence of IDs to reference
+    data_formats_accepted: # sequence of formats like: json, xml, serialization, file, csv
+      - json
+      - serialization
+    communication_links:
+      Public Greeting API Response:
+        target: pubic-clients
+        description: HTTP response from /helloWorld
+        protocol: http
+        authentication: none
+        authorization: none
+        vpn: false
+        ip_filtered: false
+        readonly: true
+        usage: business
+        data_assets_sent:
+          - json-response
+        data_assets_received:
+          - json-request
+ 
+  Public Clients:
+    id: pubic-clients
+    description: Anonymous client on the public internet sending requests to the API.
+    type: external-entity
+    usage: business
+    used_as_client_by_human: true
+    out_of_scope: true
+    justification_out_of_scope: Client devices and browsers are not managed by this application.
+    size: component
+    technology: browser
+    internet: false
+    machine: physical
+    encryption: none
+    owner: External Untrusted Users
+    confidentiality: public
+    integrity: operational
+    availability: operational
+    multi_tenant: true
+    redundant: false
+    custom_developed_parts: false
+    data_assets_processed:
+      - json-response
+    data_assets_stored: []
+    data_formats_accepted:
+      - json
+    communication_links:
+      Public Greeting API Request:
+        target: python-http-service
+        description: HTTP request/response sessions to /helloWorld
+        protocol: http
+        authentication: none
+        authorization: none
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: business
+        data_assets_sent:
+          - json-request
+        data_assets_received:
+          - json-response
+
+
+trust_boundaries:
+  Public Internet:
+    id: public-internet
+    description: Untrusted public network from which untrusted consumers access the API.
+    type: network-dedicated-hoster
+    tags: []
+    technical_assets_inside:
+      - pubic-clients
+    trust_boundaries_nested: []
+
+  Corporate Edge:
+    id: corporate-edge
+    description: Intranet boundary between the public internet and internal resources
+    type: network-on-prem
+    tags: 
+      - edge
+    technical_assets_inside:
+      - python-http-service
+    trust_boundaries_nested: # sequence of IDs to reference

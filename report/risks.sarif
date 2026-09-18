@@ -1,0 +1,489 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Threagile",
+          "informationUri": "https://threagile.io",
+          "version": "1.0.0",
+          "rules": [
+            {
+              "id": "missing-authentication",
+              "name": "Missing Authentication",
+              "shortDescription": {
+                "text": "Technical assets (especially multi-tenant systems) should authenticate incoming requests when the asset processes sensitive data. "
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.\n\nMitigation: Apply an authentication method to the technical asset. To protect highly sensitive data consider the use of two-factor authentication for human users."
+              },
+              "help": {
+                "text": "How to fix: Authentication of Incoming Requests\n\nMitigation: Apply an authentication method to the technical asset. To protect highly sensitive data consider the use of two-factor authentication for human users.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-306",
+                "function": "architecture",
+                "security-severity": "6.5",
+                "stride": "elevation-of-privilege"
+              }
+            },
+            {
+              "id": "missing-authentication-second-factor",
+              "name": "Missing Two-Factor Authentication (2FA)",
+              "shortDescription": {
+                "text": "Technical assets (especially multi-tenant systems) should authenticate incoming requests with two-factor (2FA) authentication when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by humans."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.\n\nMitigation: Apply an authentication method to the technical asset protecting highly sensitive data via two-factor authentication for human users."
+              },
+              "help": {
+                "text": "How to fix: Authentication with Second Factor (2FA)\n\nMitigation: Apply an authentication method to the technical asset protecting highly sensitive data via two-factor authentication for human users.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-308",
+                "function": "business-side",
+                "security-severity": "5.0",
+                "stride": "elevation-of-privilege"
+              }
+            },
+            {
+              "id": "missing-build-infrastructure",
+              "name": "Missing Build Infrastructure",
+              "shortDescription": {
+                "text": "The modeled architecture does not contain a build infrastructure (devops-client, sourcecode-repo, build-pipeline, etc.), which might be the risk of a model missing critical assets (and thus not seeing their risks). If the architecture contains custom-developed parts, the pipeline where code gets developed and built needs to be part of the model."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to exploit risks unseen in this threat model due to critical build infrastructure components missing in the model.\n\nMitigation: Include the build infrastructure in the model."
+              },
+              "help": {
+                "text": "How to fix: Build Pipeline Hardening\n\nMitigation: Include the build infrastructure in the model.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-1127",
+                "function": "architecture",
+                "security-severity": "5.0",
+                "stride": "tampering"
+              }
+            },
+            {
+              "id": "missing-hardening",
+              "name": "Missing Hardening",
+              "shortDescription": {
+                "text": "Technical assets with a Relative Attacker Attractiveness (RAA) value of 55 % or higher should be explicitly hardened taking best practices and vendor hardening guides into account."
+              },
+              "fullDescription": {
+                "text": "If this risk remains unmitigated, attackers might be able to easier attack high-value targets.\n\nMitigation: Try to apply all hardening best practices (like CIS benchmarks, OWASP recommendations, vendor recommendations, DevSec Hardening Framework, DBSAT for Oracle databases, and others)."
+              },
+              "help": {
+                "text": "How to fix: System Hardening\n\nMitigation: Try to apply all hardening best practices (like CIS benchmarks, OWASP recommendations, vendor recommendations, DevSec Hardening Framework, DBSAT for Oracle databases, and others).\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-16",
+                "function": "operations",
+                "security-severity": "6.5",
+                "stride": "tampering"
+              }
+            },
+            {
+              "id": "missing-vault",
+              "name": "Missing Vault (Secret Storage)",
+              "shortDescription": {
+                "text": "In order to avoid the risk of secret leakage via config files (when attacked through vulnerabilities being able to read files like Path-Traversal and others), it is best practice to use a separate hardened process with proper authentication, authorization, and audit logging to access config secrets (like credentials, private keys, client certificates, etc.). This component is usually some kind of Vault."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to easier steal config secrets (like credentials, private keys, client certificates, etc.) once a vulnerability to access files is present and exploited.\n\nMitigation: Consider using a Vault (Secret Storage) to securely store and access config secrets (like credentials, private keys, client certificates, etc.)."
+              },
+              "help": {
+                "text": "How to fix: Vault (Secret Storage)\n\nMitigation: Consider using a Vault (Secret Storage) to securely store and access config secrets (like credentials, private keys, client certificates, etc.).\n\nCheck: Is there a Vault (Secret Storage) in place?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-522",
+                "function": "architecture",
+                "security-severity": "5.0",
+                "stride": "information-disclosure"
+              }
+            },
+            {
+              "id": "missing-waf",
+              "name": "Missing Web Application Firewall (WAF)",
+              "shortDescription": {
+                "text": "To have a first line of filtering defense, security architectures with web-services or web-applications should include a WAF in front of them. Even though a WAF is not a replacement for security (all components must be secure even without a WAF) it adds another layer of defense to the overall system by delaying some attacks and having easier attack alerting through it."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to apply standard attack pattern tests at great speed without any filtering.\n\nMitigation: Consider placing a Web Application Firewall (WAF) in front of the web-services and/or web-applications. For cloud environments many cloud providers offer pre-configured WAFs. Even reverse proxies can be enhances by a WAF component via ModSecurity plugins."
+              },
+              "help": {
+                "text": "How to fix: Web Application Firewall (WAF)\n\nMitigation: Consider placing a Web Application Firewall (WAF) in front of the web-services and/or web-applications. For cloud environments many cloud providers offer pre-configured WAFs. Even reverse proxies can be enhances by a WAF component via ModSecurity plugins.\n\nCheck: Is there a Web Application Firewall (WAF) in place?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Virtual_Patching_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-1008",
+                "function": "operations",
+                "security-severity": "5.0",
+                "stride": "tampering"
+              }
+            },
+            {
+              "id": "server-side-request-forgery",
+              "name": "Server-Side Request Forgery (SSRF)",
+              "shortDescription": {
+                "text": "When a server system (i.e. not a client) is accessing other server systems via typical web protocols Server-Side Request Forgery (SSRF) or Local-File-Inclusion (LFI) or Remote-File-Inclusion (RFI) risks might arise. "
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to access sensitive services or files of network-reachable components by modifying outgoing calls of affected components.\n\nMitigation: Try to avoid constructing the outgoing target URL with caller controllable values. Alternatively use a mapping (whitelist) when accessing outgoing URLs instead of creating them including caller controllable values. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level."
+              },
+              "help": {
+                "text": "How to fix: SSRF Prevention\n\nMitigation: Try to avoid constructing the outgoing target URL with caller controllable values. Alternatively use a mapping (whitelist) when accessing outgoing URLs instead of creating them including caller controllable values. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-918",
+                "function": "development",
+                "security-severity": "6.5",
+                "stride": "information-disclosure"
+              }
+            },
+            {
+              "id": "unencrypted-communication",
+              "name": "Unencrypted Communication",
+              "shortDescription": {
+                "text": "Due to the confidentiality and/or integrity rating of the data assets transferred over the communication link this connection must be encrypted."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, network attackers might be able to to eavesdrop on unencrypted sensitive data sent between components.\n\nMitigation: Apply transport layer encryption to the communication link."
+              },
+              "help": {
+                "text": "How to fix: Encryption of Communication Links\n\nMitigation: Apply transport layer encryption to the communication link.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-319",
+                "function": "operations",
+                "security-severity": "6.5",
+                "stride": "information-disclosure"
+              }
+            },
+            {
+              "id": "untrusted-deserialization",
+              "name": "Untrusted Deserialization",
+              "shortDescription": {
+                "text": "When a technical asset accepts data in a specific serialized form (like Java or .NET serialization), Untrusted Deserialization risks might arise.\u003cbr\u003e\u003cbr\u003eSee \u003ca href=\"https://christian-schneider.net/JavaDeserializationSecurityFAQ.html\"\u003ehttps://christian-schneider.net/JavaDeserializationSecurityFAQ.html\u003c/a\u003e for more details."
+              },
+              "fullDescription": {
+                "text": "If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.\n\nMitigation: Try to avoid the deserialization of untrusted data (even of data within the same trust-boundary as long as it is sent across a remote connection) in order to stay safe from Untrusted Deserialization vulnerabilities. Alternatively a strict whitelisting approach of the classes/types/values to deserialize might help as well. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level."
+              },
+              "help": {
+                "text": "How to fix: Prevention of Deserialization of Untrusted Data\n\nMitigation: Try to avoid the deserialization of untrusted data (even of data within the same trust-boundary as long as it is sent across a remote connection) in order to stay safe from Untrusted Deserialization vulnerabilities. Alternatively a strict whitelisting approach of the classes/types/values to deserialize might help as well. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.\n\nCheck: Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?"
+              },
+              "helpUri": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html",
+              "properties": {
+                "cwe": "CWE-502",
+                "function": "architecture",
+                "security-severity": "6.5",
+                "stride": "tampering"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "missing-authentication",
+          "ruleIndex": 0,
+          "level": "warning",
+          "message": {
+            "text": "Missing Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-authentication@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "possible",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "missing-authentication-second-factor",
+          "ruleIndex": 1,
+          "level": "warning",
+          "message": {
+            "text": "Missing Two-Factor Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-authentication-second-factor@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "possible",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "unlikely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "medium",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "missing-build-infrastructure",
+          "ruleIndex": 2,
+          "level": "warning",
+          "message": {
+            "text": "Missing Build Infrastructure in the threat model (referencing asset Python HTTP Service as an example)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-build-infrastructure@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "improbable",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "unlikely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "medium",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "missing-hardening",
+          "ruleIndex": 3,
+          "level": "warning",
+          "message": {
+            "text": "Missing Hardening risk at Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-hardening@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "improbable",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "missing-vault",
+          "ruleIndex": 4,
+          "level": "warning",
+          "message": {
+            "text": "Missing Vault (Secret Storage) in the threat model (referencing asset Python HTTP Service as an example)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-vault@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "improbable",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "unlikely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "medium",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "missing-waf",
+          "ruleIndex": 5,
+          "level": "warning",
+          "message": {
+            "text": "Missing Web Application Firewall (WAF) risk at Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "missing-waf@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "improbable",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "unlikely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "medium",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "server-side-request-forgery",
+          "ruleIndex": 6,
+          "level": "warning",
+          "message": {
+            "text": "Server-Side Request Forgery (SSRF) risk at Python HTTP Service server-side web-requesting the target Public Clients via Public Greeting API Response"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "server-side-request-forgery@python-http-service@pubic-clients@python-http-service\u003epublic-greeting-api-response"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "possible",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "unencrypted-communication",
+          "ruleIndex": 7,
+          "level": "warning",
+          "message": {
+            "text": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "unencrypted-communication@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "possible",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "pubic-clients",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "unencrypted-communication",
+          "ruleIndex": 7,
+          "level": "warning",
+          "message": {
+            "text": "Unencrypted Communication named Public Greeting API Response between Python HTTP Service and Public Clients"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "unencrypted-communication@python-http-service\u003epublic-greeting-api-response@python-http-service@pubic-clients"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "possible",
+            "exploitationImpact": "medium",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "untrusted-deserialization",
+          "ruleIndex": 8,
+          "level": "warning",
+          "message": {
+            "text": "Untrusted Deserialization risk at Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "untrusted-deserialization@python-http-service"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "probable",
+            "exploitationImpact": "very-high",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "elevated",
+            "status": "unchecked"
+          }
+        }
+      ]
+    }
+  ]
+}

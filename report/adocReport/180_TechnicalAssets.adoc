@@ -1,0 +1,258 @@
+= Identified Risks by Technical Asset
+In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+
+These risks are distributed across *1 in-scope technical assets*. 
+The following sub-chapters of this section describe each identified risk grouped by technical asset. 
+The RAA value of a technical asset is the calculated "Relative Attacker Attractiveness" value in percent.
+[[python-http-service]]
+== [.ElevatedRisk]#Python HTTP Service: 9/9 unmitigated Risks#
+=== Description
+The python HTTP server that implements the /helloWorld endpoint
+
+=== Identified Risks of Asset
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.#
+
+<<untrusted-deserialization,[SmallGrey]#untrusted-deserialization@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<missing-authentication,[SmallGrey]#missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Missing Hardening* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<missing-hardening,[SmallGrey]#missing-hardening@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<server-side-request-forgery,[SmallGrey]#server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<unencrypted-communication,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Medium Risk Severity#
+
+[.ElevatedRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<missing-build-infrastructure,[SmallGrey]#missing-build-infrastructure@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Medium Risk Severity#
+
+[.ElevatedRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<missing-authentication-second-factor,[SmallGrey]#missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Medium Risk Severity#
+
+[.ElevatedRisk]#*Missing Vault (Secret Storage)* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<missing-vault,[SmallGrey]#missing-vault@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#Medium Risk Severity#
+
+[.ElevatedRisk]#*Missing Web Application Firewall (WAF)* risk at *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<missing-waf,[SmallGrey]#missing-waf@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+<<<
+
+=== Asset Information
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| ID:             3+| python-http-service
+| Type:             | process| Usage: | business
+| RAA:              | 100 %| Size: | application
+| Technology:       | web-service-rest| Tags: | apiendpoint, httpserver, python
+| Internet:         | true| Machine: | virtual
+| Encryption:       | none| Multi-Tenant: | false
+| Redundant:        | false| Custom-Developed: | true
+| Client by Human:  | false| Formats Accepted: | JSON, Serialization
+| Data Processed: 3+| JSON Request, JSON Response
+| Data Stored:    3+| [GrayText]#none#
+|===
+
+=== Asset Rating
+
+[cols="h,2",frame=none,grid=none]
+|===
+| Owner:             | Alice's Development Team
+| Confidentiality:   | strictly-confidential<<ref-confidentiality-values,*>>
+| Integrity:         | critical<<ref-criticality-values,*>>
+| Availability:      | operational<<ref-criticality-values,*>>
+| CIA-Justification: | We said it's just a hello world API, so no need for any special CIA ratings here. At the same time, the service runs on our server and nobody should be able to access the server without authorization
+
+|===
+
+=== Outgoing Communication Links: 1
+==== Public Greeting API Response (outgoing)
+HTTP response from /helloWorld
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| Target:         | <<pubic-clients,Public Clients>>| Protocol:       | http
+| Encrypted:      | false| Authentication: | none
+| Authorization:  | none| Read-Only:      | true
+| Usage:          | business| Tags:           | [GrayText]#none#
+| VPN:            | false| IP-Filtered:    | false
+| Data Sent:      | JSON Response| Data Received:  | JSON Request
+|===
+
+=== Incoming Communication Links: 1
+==== Public Greeting API Request (incoming)
+HTTP request/response sessions to /helloWorld
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| Source:         | <<pubic-clients,Public Clients>>| Protocol:       | http
+| Encrypted:      | false| Authentication: | none
+| Authorization:  | none| Read-Only:      | false
+| Usage:          | business| Tags:           | [GrayText]#none#
+| VPN:            | false| IP-Filtered:    | false
+| Data Sent:      | JSON Request| Data Received:  | JSON Response
+|===
+
+[[pubic-clients]]
+== [OutOfScope]#Public Clients: out-of-scope#
+=== Description
+Anonymous client on the public internet sending requests to the API.
+
+=== Identified Risks of Asset
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Request* between *Public Clients* and *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<unencrypted-communication,[SmallGrey]#unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+<<<
+
+=== Asset Information
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| ID:             3+| pubic-clients
+| Type:             | external-entity| Usage: | business
+| RAA:              | [GrayText]#out-of-scope#| Size: | component
+| Technology:       | browser| Tags: | [GrayText]#none#
+| Internet:         | false| Machine: | physical
+| Encryption:       | none| Multi-Tenant: | true
+| Redundant:        | false| Custom-Developed: | false
+| Client by Human:  | true| Formats Accepted: | JSON
+| Data Processed: 3+| JSON Request, JSON Response
+| Data Stored:    3+| [GrayText]#none#
+|===
+
+=== Asset Rating
+
+[cols="h,2",frame=none,grid=none]
+|===
+| Owner:             | External Untrusted Users
+| Confidentiality:   | public<<ref-confidentiality-values,*>>
+| Integrity:         | critical<<ref-criticality-values,*>>
+| Availability:      | operational<<ref-criticality-values,*>>
+| CIA-Justification: | 
+| Asset Out-of-Scope Justification: 2+| Client devices and browsers are not managed by this application.
+|===
+
+=== Outgoing Communication Links: 1
+==== Public Greeting API Request (outgoing)
+HTTP request/response sessions to /helloWorld
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| Target:         | <<python-http-service,Python HTTP Service>>| Protocol:       | http
+| Encrypted:      | false| Authentication: | none
+| Authorization:  | none| Read-Only:      | false
+| Usage:          | business| Tags:           | [GrayText]#none#
+| VPN:            | false| IP-Filtered:    | false
+| Data Sent:      | JSON Request| Data Received:  | JSON Response
+|===
+
+=== Incoming Communication Links: 1
+==== Public Greeting API Response (incoming)
+HTTP response from /helloWorld
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| Source:         | <<python-http-service,Python HTTP Service>>| Protocol:       | http
+| Encrypted:      | false| Authentication: | none
+| Authorization:  | none| Read-Only:      | true
+| Usage:          | business| Tags:           | [GrayText]#none#
+| VPN:            | false| IP-Filtered:    | false
+| Data Sent:      | JSON Response| Data Received:  | JSON Request
+|===
+

@@ -1,0 +1,278 @@
+{
+  "version": "15.0.6",
+  "scan": {
+    "scanner": {
+      "id": "threagile",
+      "name": "Threagile",
+      "version": "1.0.0",
+      "url": "https://threagile.io",
+      "vendor": {
+        "name": "Threagile"
+      }
+    },
+    "analyzer": {
+      "id": "threagile",
+      "name": "Threagile",
+      "version": "1.0.0",
+      "vendor": {
+        "name": "Threagile"
+      }
+    },
+    "type": "sast",
+    "start_time": "2026-01-01T00:00:00Z",
+    "end_time": "2026-01-01T00:00:00Z",
+    "status": "success"
+  },
+  "vulnerabilities": [
+    {
+      "id": "0aca11e18a929328f2b008e65a6f2c00e60f2a65a2498a3da7b8e2cb427b3f48",
+      "name": "Missing Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service",
+      "description": "Missing Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service",
+      "severity": "Medium",
+      "solution": "Authentication of Incoming Requests",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-authentication",
+          "value": "missing-authentication"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-306",
+          "value": "306",
+          "url": "https://cwe.mitre.org/data/definitions/306.html"
+        }
+      ]
+    },
+    {
+      "id": "2e55d58e9cfc77bd81402d79825f211095322fb4c9527aeca67196ff285a6fad",
+      "name": "Missing Two-Factor Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service",
+      "description": "Missing Two-Factor Authentication covering communication link Public Greeting API Request from Public Clients to Python HTTP Service",
+      "severity": "Medium",
+      "solution": "Authentication with Second Factor (2FA)",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-authentication-second-factor",
+          "value": "missing-authentication-second-factor"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-308",
+          "value": "308",
+          "url": "https://cwe.mitre.org/data/definitions/308.html"
+        }
+      ]
+    },
+    {
+      "id": "5688a7b9f2e9ea2ae948723153acc97d337c46934096749b041c30eaac55ed63",
+      "name": "Missing Build Infrastructure in the threat model (referencing asset Python HTTP Service as an example)",
+      "description": "Missing Build Infrastructure in the threat model (referencing asset Python HTTP Service as an example)",
+      "severity": "Medium",
+      "solution": "Build Pipeline Hardening",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-build-infrastructure",
+          "value": "missing-build-infrastructure"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-1127",
+          "value": "1127",
+          "url": "https://cwe.mitre.org/data/definitions/1127.html"
+        }
+      ]
+    },
+    {
+      "id": "c381cfcec0d4c4c7b4b843abf6dbcc0b2d14de07159e9e90f61905f55490dddc",
+      "name": "Missing Hardening risk at Python HTTP Service",
+      "description": "Missing Hardening risk at Python HTTP Service",
+      "severity": "Medium",
+      "solution": "System Hardening",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-hardening",
+          "value": "missing-hardening"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-16",
+          "value": "16",
+          "url": "https://cwe.mitre.org/data/definitions/16.html"
+        }
+      ]
+    },
+    {
+      "id": "34b71996e101a5f3c20a0c69b3ab34fb7e01b9a438d11f4a0e5b2fc5634b200e",
+      "name": "Missing Vault (Secret Storage) in the threat model (referencing asset Python HTTP Service as an example)",
+      "description": "Missing Vault (Secret Storage) in the threat model (referencing asset Python HTTP Service as an example)",
+      "severity": "Medium",
+      "solution": "Vault (Secret Storage)",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-vault",
+          "value": "missing-vault"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-522",
+          "value": "522",
+          "url": "https://cwe.mitre.org/data/definitions/522.html"
+        }
+      ]
+    },
+    {
+      "id": "0ea10e8ea065d20f877937294f4f35fa1576518d6ef7adb55d4d5ef4f169ffc8",
+      "name": "Missing Web Application Firewall (WAF) risk at Python HTTP Service",
+      "description": "Missing Web Application Firewall (WAF) risk at Python HTTP Service",
+      "severity": "Medium",
+      "solution": "Web Application Firewall (WAF)",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: missing-waf",
+          "value": "missing-waf"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-1008",
+          "value": "1008",
+          "url": "https://cwe.mitre.org/data/definitions/1008.html"
+        }
+      ]
+    },
+    {
+      "id": "07a64fd15396b864462d447bab2a49f9cc77550251d9cc38de5e4818c311b117",
+      "name": "Server-Side Request Forgery (SSRF) risk at Python HTTP Service server-side web-requesting the target Public Clients via Public Greeting API Response",
+      "description": "Server-Side Request Forgery (SSRF) risk at Python HTTP Service server-side web-requesting the target Public Clients via Public Greeting API Response",
+      "severity": "Medium",
+      "solution": "SSRF Prevention",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: server-side-request-forgery",
+          "value": "server-side-request-forgery"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-918",
+          "value": "918",
+          "url": "https://cwe.mitre.org/data/definitions/918.html"
+        }
+      ]
+    },
+    {
+      "id": "f7e9b97ef6f276cdbf0e2d13e3c5959d67e2e688ca67ced337040f044e7fef2d",
+      "name": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service",
+      "description": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service",
+      "severity": "Medium",
+      "solution": "Encryption of Communication Links",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: unencrypted-communication",
+          "value": "unencrypted-communication"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-319",
+          "value": "319",
+          "url": "https://cwe.mitre.org/data/definitions/319.html"
+        }
+      ]
+    },
+    {
+      "id": "4699bc2a705ec87de290c3e3f5e22f132d8caae31a966e97fa3d1dd4444e3e1c",
+      "name": "Unencrypted Communication named Public Greeting API Response between Python HTTP Service and Public Clients",
+      "description": "Unencrypted Communication named Public Greeting API Response between Python HTTP Service and Public Clients",
+      "severity": "Medium",
+      "solution": "Encryption of Communication Links",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: unencrypted-communication",
+          "value": "unencrypted-communication"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-319",
+          "value": "319",
+          "url": "https://cwe.mitre.org/data/definitions/319.html"
+        }
+      ]
+    },
+    {
+      "id": "7c76a051edc04e8752d3800d2c0660924202e5f94cd59df24c04289be423013a",
+      "name": "Untrusted Deserialization risk at Python HTTP Service",
+      "description": "Untrusted Deserialization risk at Python HTTP Service",
+      "severity": "Medium",
+      "solution": "Prevention of Deserialization of Untrusted Data",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: untrusted-deserialization",
+          "value": "untrusted-deserialization"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-502",
+          "value": "502",
+          "url": "https://cwe.mitre.org/data/definitions/502.html"
+        }
+      ]
+    }
+  ]
+}

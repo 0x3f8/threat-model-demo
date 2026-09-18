@@ -1,0 +1,22 @@
+{
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ \"$fileName\" -o \"$fileNameWithoutExt\" && & \"./$fileNameWithoutExt.exe\" && rm \"./$fileNameWithoutExt.exe\""
+        },
+        "git.enableSmartCommit": true,
+        "git.confirmSync": false,
+        "yaml.disableSchemaDetection": [
+            "**/.github/workflows/*.yml",
+            "**/.github/workflows/*.yaml",
+            "**/.gitea/workflows/*.yml",
+            "**/.gitea/workflows/*.yaml",
+            "**/.forgejo/workflows/*.yml",
+            "**/.forgejo/workflows/*.yaml"
+        ],
+        "redhat.telemetry.enabled": false,
+        "json.schemas": [
+        ],
+        "yaml.schemas": {
+            ".vscode/schema.json": "*.yaml"
+        }
+
+}

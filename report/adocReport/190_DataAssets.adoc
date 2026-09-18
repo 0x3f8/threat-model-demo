@@ -1,0 +1,69 @@
+= Identified Data Breach Probabilities by Data Asset
+In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+
+These risks are distributed across *2 data assets*. 
+The following sub-chapters of this section describe the derived data breach probabilities grouped by data asset.
+
+<<<
+[[dataAsset:json-request]]
+== [.HighRisk]#JSON Request: 8/8 unmitigated Risks#
+Payload for the request/response exchange
+
+
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| ID:                3+| json-request
+| Usage:               | business| Quantity:          | very-few
+| Tags:                | jsonpayload| Origin:            | Untrusted Clients
+| Owner:               | Alice's Development Team| Confidentiality:   | public<<ref-confidentiality-values,*>>
+| Integrity:           | critical<<ref-criticality-values,*>>| Availability:      | operational<<ref-criticality-values,*>>
+| CIA-Justification: 3+| We're just doing hello world, so no need for any special CIA ratings here.
+| Processed by:      3+| Public Clients, Python HTTP Service
+| Stored by:         3+| [GrayText]#none#
+| Sent via:            | Public Greeting API Request| Received via:        | Public Greeting API Response
+| Data Breach:       3+| [.HighRisk]#probable#
+| Data Breach Risks: 3+| This data asset has data breach potential because of 8 remaining risks:
+|                    2+| <<untrusted-deserialization,[.HighRisk.small]#Probable: untrusted-deserialization@python-http-service#>>
+|                    2+| <<missing-authentication,[.MediumRisk.small]#Possible: missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<missing-authentication-second-factor,[.MediumRisk.small]#Possible: missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<server-side-request-forgery,[.MediumRisk.small]#Possible: server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+|                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+|                    2+| <<missing-hardening,[.LowRisk.small]#Improbable: missing-hardening@python-http-service#>>
+|                    2+| <<missing-waf,[.LowRisk.small]#Improbable: missing-waf@python-http-service#>>
+
+|===
+
+<<<
+[[dataAsset:json-response]]
+== [.HighRisk]#JSON Response: 8/8 unmitigated Risks#
+Payload for the request/response exchange
+
+
+
+[cols="h,1,h,1",frame=none,grid=none]
+|===
+| ID:                3+| json-response
+| Usage:               | business| Quantity:          | very-few
+| Tags:                | jsonpayload| Origin:            | python-http-server
+| Owner:               | | Confidentiality:   | public<<ref-confidentiality-values,*>>
+| Integrity:           | critical<<ref-criticality-values,*>>| Availability:      | operational<<ref-criticality-values,*>>
+| CIA-Justification: 3+| We're just responding to the request so we might assume nothing we send back to the client is dangerous. Is that a fair assumption?
+
+| Processed by:      3+| Public Clients, Python HTTP Service
+| Stored by:         3+| [GrayText]#none#
+| Sent via:            | Public Greeting API Response| Received via:        | Public Greeting API Request
+| Data Breach:       3+| [.HighRisk]#probable#
+| Data Breach Risks: 3+| This data asset has data breach potential because of 8 remaining risks:
+|                    2+| <<untrusted-deserialization,[.HighRisk.small]#Probable: untrusted-deserialization@python-http-service#>>
+|                    2+| <<missing-authentication,[.MediumRisk.small]#Possible: missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<missing-authentication-second-factor,[.MediumRisk.small]#Possible: missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<server-side-request-forgery,[.MediumRisk.small]#Possible: server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+|                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+|                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+|                    2+| <<missing-hardening,[.LowRisk.small]#Improbable: missing-hardening@python-http-service#>>
+|                    2+| <<missing-waf,[.LowRisk.small]#Improbable: missing-waf@python-http-service#>>
+
+|===
+

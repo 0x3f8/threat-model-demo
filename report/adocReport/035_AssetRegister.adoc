@@ -1,0 +1,18 @@
+= Asset Register
+
+== Technical Assets
+
+<<pubic-clients,*Public Clients*: out-of-scope>>::
+  Anonymous client on the public internet sending requests to the API.
+
+<<python-http-service,*Python HTTP Service*>>::
+  The python HTTP server that implements the /helloWorld endpoint
+
+== Data Assets
+
+<<dataAsset:json-request,*JSON Request*>>::
+  Payload for the request/response exchange
+
+<<dataAsset:json-response,*JSON Response*>>::
+  Payload for the request/response exchange
+

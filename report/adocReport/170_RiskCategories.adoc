@@ -1,0 +1,424 @@
+= Identified Risks by Vulnerability category
+In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+
+These risks are distributed across *9 vulnerability categories*. 
+The following sub-chapters of this section describe each identified risk category.
+
+[[missing-authentication]]
+== [.ElevatedRisk]#Missing Authentication: 1/1 unmitigated Risk#
+
+*Description* (Elevation of Privilege): https://cwe.mitre.org/data/definitions/306.html[CWE 306]::
+Technical assets (especially multi-tenant systems) should authenticate incoming requests when the asset processes sensitive data. 
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.
+
+*Detection Logic*::
+In-scope technical assets (except load-balancer, reverse-proxy, service-registry, waf, ids, and ips and in-process calls) should authenticate incoming requests when the asset processes sensitive data. This is especially the case for all multi-tenant assets (there even non-sensitive ones).
+
+*Risk Rating*::
+The risk rating (medium or high) depends on the sensitivity of the data sent across the communication link. Monitoring callers are exempted from this risk.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Technical assets which do not process requests regarding functionality or data linked to end-users (customers) can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Authentication of Incoming Requests::
+Apply an authentication method to the technical asset. To protect highly sensitive data consider the use of two-factor authentication for human users.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V2 - Authentication Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html[Authentication_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Authentication* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-hardening]]
+== [.ElevatedRisk]#Missing Hardening: 1/1 unmitigated Risk#
+
+*Description* (Tampering): https://cwe.mitre.org/data/definitions/16.html[CWE 16]::
+Technical assets with a Relative Attacker Attractiveness (RAA) value of 55 % or higher should be explicitly hardened taking best practices and vendor hardening guides into account.
+
+*Impact*::
+If this risk remains unmitigated, attackers might be able to easier attack high-value targets.
+
+*Detection Logic*::
+In-scope technical assets with RAA values of 55 % or higher. Generally for high-value targets like data stores, application servers, identity providers and ERP systems this limit is reduced to 40 %
+
+*Risk Rating*::
+The risk rating depends on the sensitivity of the data processed in the technical asset.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Usually no false positives.#
+
+[RiskStatusMitigated]#*Mitigation*# (Operations): System Hardening::
+Try to apply all hardening best practices (like CIS benchmarks, OWASP recommendations, vendor recommendations, DevSec Hardening Framework, DBSAT for Oracle databases, and others).
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V14 - Configuration Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html[Attack_Surface_Analysis_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Hardening* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Missing Hardening* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-hardening@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[server-side-request-forgery]]
+== [.ElevatedRisk]#Server-Side Request Forgery (SSRF): 1/1 unmitigated Risk#
+
+*Description* (Information Disclosure): https://cwe.mitre.org/data/definitions/918.html[CWE 918]::
+When a server system (i.e. not a client) is accessing other server systems via typical web protocols Server-Side Request Forgery (SSRF) or Local-File-Inclusion (LFI) or Remote-File-Inclusion (RFI) risks might arise. 
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to access sensitive services or files of network-reachable components by modifying outgoing calls of affected components.
+
+*Detection Logic*::
+In-scope non-client systems accessing (using outgoing communication links) targets with either HTTP or HTTPS protocol.
+
+*Risk Rating*::
+The risk rating (low or medium) depends on the sensitivity of the data assets receivable via web protocols from targets within the same network trust-boundary as well on the sensitivity of the data assets receivable via web protocols from the target asset itself. Also for cloud-based environments the exploitation impact is at least medium, as cloud backend services can be attacked via SSRF.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Servers not sending outgoing web requests can be considered as false positives after review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Development): SSRF Prevention::
+Try to avoid constructing the outgoing target URL with caller controllable values. Alternatively use a mapping (whitelist) when accessing outgoing URLs instead of creating them including caller controllable values. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V12 - File and Resources Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html[Server_Side_Request_Forgery_Prevention_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Server-Side Request Forgery (SSRF)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[unencrypted-communication]]
+== [.ElevatedRisk]#Unencrypted Communication: 2/2 unmitigated Risks#
+
+*Description* (Information Disclosure): https://cwe.mitre.org/data/definitions/319.html[CWE 319]::
+Due to the confidentiality and/or integrity rating of the data assets transferred over the communication link this connection must be encrypted.
+
+*Impact*::
+If this risk is unmitigated, network attackers might be able to to eavesdrop on unencrypted sensitive data sent between components.
+
+*Detection Logic*::
+Unencrypted technical communication links of in-scope technical assets (excluding monitoring traffic as well as local-file-access, in-process-library-call and inter-process-communication) transferring sensitive data.
+
+*Risk Rating*::
+Depending on the confidentiality rating of the transferred data-assets either medium or high risk.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#When all sensitive data sent over the communication link is already fully encrypted on document or data level. Also intra-container/pod communication can be considered false positive when container orchestration platform handles encryption.#
+
+[RiskStatusMitigated]#*Mitigation*# (Operations): Encryption of Communication Links::
+Apply transport layer encryption to the communication link.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V9 - Communication Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html[Transport_Layer_Protection_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Unencrypted Communication* was found *2 times* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Request* between *Public Clients* and *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<pubic-clients,[SmallGrey]#unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[untrusted-deserialization]]
+== [.ElevatedRisk]#Untrusted Deserialization: 1/1 unmitigated Risk#
+
+*Description* (Tampering): https://cwe.mitre.org/data/definitions/502.html[CWE 502]::
+When a technical asset accepts data in a specific serialized form (like Java or .NET serialization), Untrusted Deserialization risks might arise.
+
+See https://christian-schneider.net/JavaDeserializationSecurityFAQ.html[https://christian-schneider.net/JavaDeserializationSecurityFAQ.html] for more details.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.
+
+*Detection Logic*::
+In-scope technical assets accepting serialization data formats (including EJB and RMI protocols).
+
+*Risk Rating*::
+The risk rating depends on the sensitivity of the technical asset itself and of the data assets processed.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Fully trusted (i.e. cryptographically signed or similar) data deserialized can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Prevention of Deserialization of Untrusted Data::
+Try to avoid the deserialization of untrusted data (even of data within the same trust-boundary as long as it is sent across a remote connection) in order to stay safe from Untrusted Deserialization vulnerabilities. Alternatively a strict whitelisting approach of the classes/types/values to deserialize might help as well. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V5 - Validation, Sanitization and Encoding Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html[Deserialization_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Untrusted Deserialization* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+[.ElevatedRisk]#*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.#
+
+<<python-http-service,[SmallGrey]#untrusted-deserialization@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-build-infrastructure]]
+== [.MediumRisk]#Missing Build Infrastructure: 1/1 unmitigated Risk#
+
+*Description* (Tampering): https://cwe.mitre.org/data/definitions/1127.html[CWE 1127]::
+The modeled architecture does not contain a build infrastructure (devops-client, sourcecode-repo, build-pipeline, etc.), which might be the risk of a model missing critical assets (and thus not seeing their risks). If the architecture contains custom-developed parts, the pipeline where code gets developed and built needs to be part of the model.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to exploit risks unseen in this threat model due to critical build infrastructure components missing in the model.
+
+*Detection Logic*::
+Models with in-scope custom-developed parts missing in-scope development (code creation) and build infrastructure components (devops-client, sourcecode-repo, build-pipeline, etc.).
+
+*Risk Rating*::
+The risk rating depends on the highest sensitivity of the in-scope assets running custom-developed parts.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Models not having any custom-developed parts can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Build Pipeline Hardening::
+Include the build infrastructure in the model.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V1 - Architecture, Design and Threat Modeling Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html[Attack_Surface_Analysis_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Build Infrastructure* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.MediumRisk]#_Medium Risk Severity_#
+[.MediumRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-build-infrastructure@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-authentication-second-factor]]
+== [.MediumRisk]#Missing Two-Factor Authentication (2FA): 1/1 unmitigated Risk#
+
+*Description* (Elevation of Privilege): https://cwe.mitre.org/data/definitions/308.html[CWE 308]::
+Technical assets (especially multi-tenant systems) should authenticate incoming requests with two-factor (2FA) authentication when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by humans.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.
+
+*Detection Logic*::
+In-scope technical assets (except load-balancer, reverse-proxy, waf, ids, and ips) should authenticate incoming requests via two-factor authentication (2FA) when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by a client used by a human user.
+
+*Risk Rating*::
+medium
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Technical assets which do not process requests regarding functionality or data linked to end-users (customers) can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Business Side): Authentication with Second Factor (2FA)::
+Apply an authentication method to the technical asset protecting highly sensitive data via two-factor authentication for human users.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V2 - Authentication Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html[Multifactor_Authentication_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Two-Factor Authentication (2FA)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.MediumRisk]#_Medium Risk Severity_#
+[.MediumRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-vault]]
+== [.MediumRisk]#Missing Vault (Secret Storage): 1/1 unmitigated Risk#
+
+*Description* (Information Disclosure): https://cwe.mitre.org/data/definitions/522.html[CWE 522]::
+In order to avoid the risk of secret leakage via config files (when attacked through vulnerabilities being able to read files like Path-Traversal and others), it is best practice to use a separate hardened process with proper authentication, authorization, and audit logging to access config secrets (like credentials, private keys, client certificates, etc.). This component is usually some kind of Vault.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to easier steal config secrets (like credentials, private keys, client certificates, etc.) once a vulnerability to access files is present and exploited.
+
+*Detection Logic*::
+Models without a Vault (Secret Storage).
+
+*Risk Rating*::
+The risk rating depends on the sensitivity of the technical asset itself and of the data assets processed.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Models where no technical assets have any kind of sensitive config data to protect can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Vault (Secret Storage)::
+Consider using a Vault (Secret Storage) to securely store and access config secrets (like credentials, private keys, client certificates, etc.).
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V6 - Stored Cryptography Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html[Cryptographic_Storage_Cheat_Sheet]
+
+
+*Check*
+
+Is there a Vault (Secret Storage) in place?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Vault (Secret Storage)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.MediumRisk]#_Medium Risk Severity_#
+[.MediumRisk]#*Missing Vault (Secret Storage)* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-vault@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-waf]]
+== [.MediumRisk]#Missing Web Application Firewall (WAF): 1/1 unmitigated Risk#
+
+*Description* (Tampering): https://cwe.mitre.org/data/definitions/1008.html[CWE 1008]::
+To have a first line of filtering defense, security architectures with web-services or web-applications should include a WAF in front of them. Even though a WAF is not a replacement for security (all components must be secure even without a WAF) it adds another layer of defense to the overall system by delaying some attacks and having easier attack alerting through it.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to apply standard attack pattern tests at great speed without any filtering.
+
+*Detection Logic*::
+In-scope web-services and/or web-applications accessed across a network trust boundary not having a Web Application Firewall (WAF) in front of them.
+
+*Risk Rating*::
+The risk rating depends on the sensitivity of the technical asset itself and of the data assets processed.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Targets only accessible via WAFs or reverse proxies containing a WAF component (like ModSecurity) can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Operations): Web Application Firewall (WAF)::
+Consider placing a Web Application Firewall (WAF) in front of the web-services and/or web-applications. For cloud environments many cloud providers offer pre-configured WAFs. Even reverse proxies can be enhances by a WAF component via ModSecurity plugins.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V1 - Architecture, Design and Threat Modeling Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Virtual_Patching_Cheat_Sheet.html[Virtual_Patching_Cheat_Sheet]
+
+
+*Check*
+
+Is there a Web Application Firewall (WAF) in place?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Web Application Firewall (WAF)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.MediumRisk]#_Medium Risk Severity_#
+[.MediumRisk]#*Missing Web Application Firewall (WAF)* risk at *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+
+<<python-http-service,[SmallGrey]#missing-waf@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+

@@ -1,0 +1,19 @@
+= Tag Listing
+This chapter lists what tags are used by which elements.
+
+
+apiendpoint::
+  Python HTTP Service
+
+edge::
+  Corporate Edge
+
+httpserver::
+  Python HTTP Service
+
+jsonpayload::
+  JSON Request, JSON Response
+
+python::
+  Python HTTP Service
+

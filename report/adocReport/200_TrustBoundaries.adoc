@@ -1,0 +1,31 @@
+= Trust Boundaries
+In total *2 trust boundaries* have been modeled during the threat modeling process.
+
+[[corporate-edge]]
+== [.Twilight]#Corporate Edge#
+[.Twilight]#Intranet boundary between the public internet and internal resources#
+
+
+[cols="h,1",frame=none,grid=none]
+|===
+| ID:                | corporate-edge
+| Type:              | [.Twilight]#network-on-prem#
+| Tags:              | edge
+| Assets inside:     | python-http-service
+| Boundaries nested: | [GrayText]#none#
+|===
+
+[[public-internet]]
+== [.Twilight]#Public Internet#
+[.Twilight]#Untrusted public network from which untrusted consumers access the API.#
+
+
+[cols="h,1",frame=none,grid=none]
+|===
+| ID:                | public-internet
+| Type:              | [.Twilight]#network-dedicated-hoster#
+| Tags:              | [GrayText]#none#
+| Assets inside:     | pubic-clients
+| Boundaries nested: | [GrayText]#none#
+|===
+

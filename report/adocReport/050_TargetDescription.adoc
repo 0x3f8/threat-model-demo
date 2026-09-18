@@ -1,0 +1,17 @@
+= Application Overview
+== Business Criticality
+
+The overall business criticality of "Greeting Application" was rated as:
+
+(  [GreyText]#archive# | [GreyText]#operational# | [GreyText]#important# | [.underline]#*CRITICAL*# | [GreyText]#mission-critical#  )
+
+
+
+== Business Overview
+Just an API endpoint for Hello World.  Nothing could go wrong at all, could it?
+
+
+
+== Technical Overview
+This API endpoint listens on port 8081 at the route /helloWorld, accepts a json payload with a name, and returns a greeting. It is implemented in Python using the built-in HTTPServer class.
+
