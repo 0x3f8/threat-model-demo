@@ -5,36 +5,12 @@ These risks are distributed across *1 in-scope technical assets*.
 The following sub-chapters of this section describe each identified risk grouped by technical asset. 
 The RAA value of a technical asset is the calculated "Relative Attacker Attractiveness" value in percent.
 [[python-http-service]]
-== [.ElevatedRisk]#Python HTTP Service: 9/9 unmitigated Risks#
+== [.ElevatedRisk]#Python HTTP Service: 7/9 unmitigated Risks#
 === Description
 The python HTTP server that implements the /helloWorld endpoint
 
 === Identified Risks of Asset
 :fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
-
-==== [.ElevatedRisk]#Elevated Risk Severity#
-
-[.ElevatedRisk]#*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.#
-
-<<untrusted-deserialization,[SmallGrey]#untrusted-deserialization@python-http-service#>>
-
-[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
-|===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
-|===
-
-
-==== [.ElevatedRisk]#Elevated Risk Severity#
-
-[.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
-
-<<missing-authentication,[SmallGrey]#missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
-
-[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
-|===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
-|===
-
 
 ==== [.ElevatedRisk]#Elevated Risk Severity#
 
@@ -72,23 +48,47 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
+==== [.ElevatedRisk]#Elevated Risk Severity#
+
+[.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+
+<<missing-authentication,[SmallGrey]#missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+| [.RiskStatusAccepted.small]#Accepted#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#This is a public API that is meant to be accessed by anyone, so we accept the risk of missing authentication.
+#
+|===
+
+
+==== Elevated Risk Severity
+
+*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.
+
+<<untrusted-deserialization,[SmallGrey]#untrusted-deserialization@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+| [.RiskStatusMitigated.small]#Mitigated#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#The API endpoint will use a safe deserialization library that prevents code execution and other attacks.
+#
+|===
+
+
 ==== [.ElevatedRisk]#Medium Risk Severity#
 
 [.ElevatedRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
 <<missing-build-infrastructure,[SmallGrey]#missing-build-infrastructure@python-http-service#>>
-
-[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
-|===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
-|===
-
-
-==== [.ElevatedRisk]#Medium Risk Severity#
-
-[.ElevatedRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
-
-<<missing-authentication-second-factor,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -117,6 +117,24 @@ The python HTTP server that implements the /helloWorld endpoint
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
 4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== Medium Risk Severity
+
+*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.
+
+<<missing-authentication-second-factor,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+| [.RiskStatusMitigated.small]#Mitigated#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#We don't allow authentication at all, so no MFA is required.
+#
 |===
 
 

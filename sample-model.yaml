@@ -187,3 +187,33 @@ trust_boundaries:
     technical_assets_inside:
       - python-http-service
     trust_boundaries_nested: # sequence of IDs to reference
+
+risk_tracking:
+
+  missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service:
+    description: The public clients can access the API without any authentication, which is a risk.
+    status: accepted
+    justification: >
+      This is a public API that is meant to be accessed by anyone, so we accept the risk of missing authentication.
+    ticket: N/A
+    date: 2026-01-02
+    checked_by: Alice
+
+  missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service:
+    description: There is no authentication method, so there is no second factor authentication required.
+    status: mitigated
+    justification: >
+      We don't allow authentication at all, so no MFA is required.
+    ticket: N/A
+    date: 2026-01-02
+    checked_by: Alice
+
+  untrusted-deserialization@python-http-service:
+    description: The API endpoint could deserialize the JSON payload sent by the public clients, which is untrusted input.
+    status: mitigated
+    justification: >
+      The API endpoint will use a safe deserialization library that prevents code execution and other attacks.
+    ticket: N/A
+    date: 2026-01-02
+    checked_by: Alice
+  

@@ -4,7 +4,7 @@
 This chapter clusters and assigns the risks by functions which are most likely able to check and mitigate them: In total *10 potential risks* have been identified during the threat modeling process of which *1 should be checked by Business Side*, *4 should be checked by Architecture*, *1 should be checked by Development*, and *4 should be checked by Operations*.{fn-risk-findings}
 
 == Business Side
-<<missing-authentication-second-factor,[.MediumRisk]#Medium: *Missing Two-Factor Authentication (2FA)*: 1/1 unmitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.#>>::
+<<missing-authentication-second-factor,Medium: *Missing Two-Factor Authentication (2FA)*: 1 mitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.>>::
 If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.
 
 
@@ -12,7 +12,7 @@ If this risk is unmitigated, attackers might be able to access or modify highly 
 <<missing-authentication,[.ElevatedRisk]#Elevated: *Missing Authentication*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::
 If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.
 
-<<untrusted-deserialization,[.ElevatedRisk]#Elevated: *Untrusted Deserialization*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Very High_ impact.#>>::
+<<untrusted-deserialization,Elevated: *Untrusted Deserialization*: 1 mitigated Risk - Exploitation likelihood is _Likely_ with _Very High_ impact.>>::
 If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.
 
 <<missing-build-infrastructure,[.MediumRisk]#Medium: *Missing Build Infrastructure*: 1/1 unmitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.#>>::

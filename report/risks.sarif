@@ -212,6 +212,12 @@
           "partialFingerprints": {
             "threagileSyntheticId": "missing-authentication@public-clients\u003epublic-greeting-api-request@public-clients@python-http-service"
           },
+          "suppressions": [
+            {
+              "kind": "external",
+              "justification": "This is a public API that is meant to be accessed by anyone, so we accept the risk of missing authentication.\n"
+            }
+          ],
           "properties": {
             "confidence": 0,
             "dataBreachProbability": "possible",
@@ -219,7 +225,7 @@
             "exploitationLikelihood": "likely",
             "mostRelevantAsset": "python-http-service",
             "severity": "elevated",
-            "status": "unchecked"
+            "status": "accepted"
           }
         },
         {
@@ -241,6 +247,12 @@
           "partialFingerprints": {
             "threagileSyntheticId": "missing-authentication-second-factor@public-clients\u003epublic-greeting-api-request@public-clients@python-http-service"
           },
+          "suppressions": [
+            {
+              "kind": "external",
+              "justification": "We don't allow authentication at all, so no MFA is required.\n"
+            }
+          ],
           "properties": {
             "confidence": 0,
             "dataBreachProbability": "possible",
@@ -248,7 +260,7 @@
             "exploitationLikelihood": "unlikely",
             "mostRelevantAsset": "python-http-service",
             "severity": "medium",
-            "status": "unchecked"
+            "status": "mitigated"
           }
         },
         {
@@ -473,6 +485,12 @@
           "partialFingerprints": {
             "threagileSyntheticId": "untrusted-deserialization@python-http-service"
           },
+          "suppressions": [
+            {
+              "kind": "external",
+              "justification": "The API endpoint will use a safe deserialization library that prevents code execution and other attacks.\n"
+            }
+          ],
           "properties": {
             "confidence": 0,
             "dataBreachProbability": "probable",
@@ -480,7 +498,7 @@
             "exploitationLikelihood": "likely",
             "mostRelevantAsset": "python-http-service",
             "severity": "elevated",
-            "status": "unchecked"
+            "status": "mitigated"
           }
         }
       ]

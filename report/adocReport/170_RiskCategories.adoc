@@ -46,7 +46,13 @@ The risk *Missing Authentication* was found *1 time* in the analyzed architectur
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+| [.RiskStatusAccepted.small]#Accepted#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#This is a public API that is meant to be accessed by anyone, so we accept the risk of missing authentication.
+#
 |===
 
 [[missing-hardening]]
@@ -195,53 +201,6 @@ The risk *Unencrypted Communication* was found *2 times* in the analyzed archite
 4+| [.RiskStatusUnchecked.small]#*Unchecked*#
 |===
 
-[[untrusted-deserialization]]
-== [.ElevatedRisk]#Untrusted Deserialization: 1/1 unmitigated Risk#
-
-*Description* (Tampering): https://cwe.mitre.org/data/definitions/502.html[CWE 502]::
-When a technical asset accepts data in a specific serialized form (like Java or .NET serialization), Untrusted Deserialization risks might arise.
-
-See https://christian-schneider.net/JavaDeserializationSecurityFAQ.html[https://christian-schneider.net/JavaDeserializationSecurityFAQ.html] for more details.
-
-*Impact*::
-If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.
-
-*Detection Logic*::
-In-scope technical assets accepting serialization data formats (including EJB and RMI protocols).
-
-*Risk Rating*::
-The risk rating depends on the sensitivity of the technical asset itself and of the data assets processed.
-
-[RiskStatusFalsePositive]#*False Positives*#::
-[RiskStatusFalsePositive]#Fully trusted (i.e. cryptographically signed or similar) data deserialized can be considered as false positives after individual review.#
-
-[RiskStatusMitigated]#*Mitigation*# (Architecture): Prevention of Deserialization of Untrusted Data::
-Try to avoid the deserialization of untrusted data (even of data within the same trust-boundary as long as it is sent across a remote connection) in order to stay safe from Untrusted Deserialization vulnerabilities. Alternatively a strict whitelisting approach of the classes/types/values to deserialize might help as well. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.
-
-
-* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V5 - Validation, Sanitization and Encoding Verification Requirements]
-* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html[Deserialization_Cheat_Sheet]
-
-
-*Check*
-
-Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
-
-=== Risk Findings
-:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
-
-The risk *Untrusted Deserialization* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
-
-==== [.ElevatedRisk]#_Elevated Risk Severity_#
-[.ElevatedRisk]#*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.#
-
-<<python-http-service,[SmallGrey]#untrusted-deserialization@python-http-service#>>
-
-[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
-|===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
-|===
-
 [[missing-build-infrastructure]]
 == [.MediumRisk]#Missing Build Infrastructure: 1/1 unmitigated Risk#
 
@@ -281,51 +240,6 @@ The risk *Missing Build Infrastructure* was found *1 time* in the analyzed archi
 [.MediumRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
 <<python-http-service,[SmallGrey]#missing-build-infrastructure@python-http-service#>>
-
-[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
-|===
-4+| [.RiskStatusUnchecked.small]#*Unchecked*#
-|===
-
-[[missing-authentication-second-factor]]
-== [.MediumRisk]#Missing Two-Factor Authentication (2FA): 1/1 unmitigated Risk#
-
-*Description* (Elevation of Privilege): https://cwe.mitre.org/data/definitions/308.html[CWE 308]::
-Technical assets (especially multi-tenant systems) should authenticate incoming requests with two-factor (2FA) authentication when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by humans.
-
-*Impact*::
-If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.
-
-*Detection Logic*::
-In-scope technical assets (except load-balancer, reverse-proxy, waf, ids, and ips) should authenticate incoming requests via two-factor authentication (2FA) when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by a client used by a human user.
-
-*Risk Rating*::
-medium
-
-[RiskStatusFalsePositive]#*False Positives*#::
-[RiskStatusFalsePositive]#Technical assets which do not process requests regarding functionality or data linked to end-users (customers) can be considered as false positives after individual review.#
-
-[RiskStatusMitigated]#*Mitigation*# (Business Side): Authentication with Second Factor (2FA)::
-Apply an authentication method to the technical asset protecting highly sensitive data via two-factor authentication for human users.
-
-
-* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V2 - Authentication Verification Requirements]
-* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html[Multifactor_Authentication_Cheat_Sheet]
-
-
-*Check*
-
-Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
-
-=== Risk Findings
-:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
-
-The risk *Missing Two-Factor Authentication (2FA)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
-
-==== [.MediumRisk]#_Medium Risk Severity_#
-[.MediumRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
-
-<<python-http-service,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -420,5 +334,109 @@ The risk *Missing Web Application Firewall (WAF)* was found *1 time* in the anal
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
 4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+[[missing-authentication-second-factor]]
+== Missing Two-Factor Authentication (2FA): 1 mitigated Risk
+
+*Description* (Elevation of Privilege): https://cwe.mitre.org/data/definitions/308.html[CWE 308]::
+Technical assets (especially multi-tenant systems) should authenticate incoming requests with two-factor (2FA) authentication when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by humans.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.
+
+*Detection Logic*::
+In-scope technical assets (except load-balancer, reverse-proxy, waf, ids, and ips) should authenticate incoming requests via two-factor authentication (2FA) when the asset processes or stores highly sensitive data (in terms of confidentiality, integrity, and availability) and is accessed by a client used by a human user.
+
+*Risk Rating*::
+medium
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Technical assets which do not process requests regarding functionality or data linked to end-users (customers) can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Business Side): Authentication with Second Factor (2FA)::
+Apply an authentication method to the technical asset protecting highly sensitive data via two-factor authentication for human users.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V2 - Authentication Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html[Multifactor_Authentication_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Missing Two-Factor Authentication (2FA)* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.MediumRisk]#_Medium Risk Severity_#
+*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.
+
+<<python-http-service,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+| [.RiskStatusMitigated.small]#Mitigated#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#We don't allow authentication at all, so no MFA is required.
+#
+|===
+
+[[untrusted-deserialization]]
+== Untrusted Deserialization: 1 mitigated Risk
+
+*Description* (Tampering): https://cwe.mitre.org/data/definitions/502.html[CWE 502]::
+When a technical asset accepts data in a specific serialized form (like Java or .NET serialization), Untrusted Deserialization risks might arise.
+
+See https://christian-schneider.net/JavaDeserializationSecurityFAQ.html[https://christian-schneider.net/JavaDeserializationSecurityFAQ.html] for more details.
+
+*Impact*::
+If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.
+
+*Detection Logic*::
+In-scope technical assets accepting serialization data formats (including EJB and RMI protocols).
+
+*Risk Rating*::
+The risk rating depends on the sensitivity of the technical asset itself and of the data assets processed.
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Fully trusted (i.e. cryptographically signed or similar) data deserialized can be considered as false positives after individual review.#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Prevention of Deserialization of Untrusted Data::
+Try to avoid the deserialization of untrusted data (even of data within the same trust-boundary as long as it is sent across a remote connection) in order to stay safe from Untrusted Deserialization vulnerabilities. Alternatively a strict whitelisting approach of the classes/types/values to deserialize might help as well. When a third-party product is used instead of custom developed software, check if the product applies the proper mitigation and ensure a reasonable patch-level.
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: https://owasp.org/www-project-application-security-verification-standard/[V5 - Validation, Sanitization and Encoding Verification Requirements]
+* [RiskStatusMitigated]#Cheat Sheet#: https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html[Deserialization_Cheat_Sheet]
+
+
+*Check*
+
+Are recommendations from the linked cheat sheet and referenced ASVS chapter applied?
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Untrusted Deserialization* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.ElevatedRisk]#_Elevated Risk Severity_#
+*Untrusted Deserialization* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Very High_ impact.
+
+<<python-http-service,[SmallGrey]#untrusted-deserialization@python-http-service#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+| [.RiskStatusMitigated.small]#Mitigated#
+| [.GreyText.small]#2026-01-02#
+| [.GreyText.small]#Alice#
+| [.GreyText.small]#N/A#
+
+4+|[.small]#The API endpoint will use a safe deserialization library that prevents code execution and other attacks.
+#
 |===
 

@@ -10,7 +10,7 @@ No risk identified.
 <<missing-hardening,[.ElevatedRisk]#Elevated: *Missing Hardening*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::
 If this risk remains unmitigated, attackers might be able to easier attack high-value targets.
 
-<<untrusted-deserialization,[.ElevatedRisk]#Elevated: *Untrusted Deserialization*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Very High_ impact.#>>::
+<<untrusted-deserialization,Elevated: *Untrusted Deserialization*: 1 mitigated Risk - Exploitation likelihood is _Likely_ with _Very High_ impact.>>::
 If this risk is unmitigated, attackers might be able to execute code on target systems by exploiting untrusted deserialization endpoints.
 
 <<missing-build-infrastructure,[.MediumRisk]#Medium: *Missing Build Infrastructure*: 1/1 unmitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.#>>::
@@ -41,7 +41,7 @@ No risk identified.
 <<missing-authentication,[.ElevatedRisk]#Elevated: *Missing Authentication*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::
 If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.
 
-<<missing-authentication-second-factor,[.MediumRisk]#Medium: *Missing Two-Factor Authentication (2FA)*: 1/1 unmitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.#>>::
+<<missing-authentication-second-factor,Medium: *Missing Two-Factor Authentication (2FA)*: 1 mitigated Risk - Exploitation likelihood is _Unlikely_ with _Medium_ impact.>>::
 If this risk is unmitigated, attackers might be able to access or modify highly sensitive data without strong authentication.
 
 
