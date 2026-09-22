@@ -112,7 +112,7 @@ technical_assets:
       - serialization
     communication_links:
       Public Greeting API Response:
-        target: pubic-clients
+        target: public-clients
         description: HTTP response from /helloWorld
         protocol: http
         authentication: none
@@ -127,7 +127,7 @@ technical_assets:
           - json-request
  
   Public Clients:
-    id: pubic-clients
+    id: public-clients
     description: Anonymous client on the public internet sending requests to the API.
     type: external-entity
     usage: business
@@ -175,7 +175,7 @@ trust_boundaries:
     type: network-dedicated-hoster
     tags: []
     technical_assets_inside:
-      - pubic-clients
+      - public-clients
     trust_boundaries_nested: []
 
   Corporate Edge:

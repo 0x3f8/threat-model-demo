@@ -42,7 +42,7 @@ The risk *Missing Authentication* was found *1 time* in the analyzed architectur
 ==== [.ElevatedRisk]#_Elevated Risk Severity_#
 [.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<python-http-service,[SmallGrey]#missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<python-http-service,[SmallGrey]#missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -132,7 +132,7 @@ The risk *Server-Side Request Forgery (SSRF)* was found *1 time* in the analyzed
 ==== [.ElevatedRisk]#_Elevated Risk Severity_#
 [.ElevatedRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<python-http-service,[SmallGrey]#server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+<<python-http-service,[SmallGrey]#server-side-request-forgery@python-http-service@public-clients@python-http-service>public-greeting-api-response#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -177,7 +177,7 @@ The risk *Unencrypted Communication* was found *2 times* in the analyzed archite
 ==== [.ElevatedRisk]#_Elevated Risk Severity_#
 [.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Request* between *Public Clients* and *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<pubic-clients,[SmallGrey]#unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<public-clients,[SmallGrey]#unencrypted-communication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -188,7 +188,7 @@ The risk *Unencrypted Communication* was found *2 times* in the analyzed archite
 ==== [.ElevatedRisk]#_Elevated Risk Severity_#
 [.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<python-http-service,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+<<python-http-service,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@public-clients#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -325,7 +325,7 @@ The risk *Missing Two-Factor Authentication (2FA)* was found *1 time* in the ana
 ==== [.MediumRisk]#_Medium Risk Severity_#
 [.MediumRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
-<<python-http-service,[SmallGrey]#missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<python-http-service,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===

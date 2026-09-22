@@ -28,7 +28,7 @@ The python HTTP server that implements the /helloWorld endpoint
 
 [.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<missing-authentication,[SmallGrey]#missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<missing-authentication,[SmallGrey]#missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -52,7 +52,7 @@ The python HTTP server that implements the /helloWorld endpoint
 
 [.ElevatedRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<server-side-request-forgery,[SmallGrey]#server-side-request-forgery@python-http-service@pubic-clients@python-http-service>public-greeting-api-response#>>
+<<server-side-request-forgery,[SmallGrey]#server-side-request-forgery@python-http-service@public-clients@python-http-service>public-greeting-api-response#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -64,7 +64,7 @@ The python HTTP server that implements the /helloWorld endpoint
 
 [.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<unencrypted-communication,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@pubic-clients#>>
+<<unencrypted-communication,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@public-clients#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -88,7 +88,7 @@ The python HTTP server that implements the /helloWorld endpoint
 
 [.ElevatedRisk]#*Missing Two-Factor Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
-<<missing-authentication-second-factor,[SmallGrey]#missing-authentication-second-factor@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<missing-authentication-second-factor,[SmallGrey]#missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -156,7 +156,7 @@ HTTP response from /helloWorld
 
 [cols="h,1,h,1",frame=none,grid=none]
 |===
-| Target:         | <<pubic-clients,Public Clients>>| Protocol:       | http
+| Target:         | <<public-clients,Public Clients>>| Protocol:       | http
 | Encrypted:      | false| Authentication: | none
 | Authorization:  | none| Read-Only:      | true
 | Usage:          | business| Tags:           | [GrayText]#none#
@@ -170,7 +170,7 @@ HTTP request/response sessions to /helloWorld
 
 [cols="h,1,h,1",frame=none,grid=none]
 |===
-| Source:         | <<pubic-clients,Public Clients>>| Protocol:       | http
+| Source:         | <<public-clients,Public Clients>>| Protocol:       | http
 | Encrypted:      | false| Authentication: | none
 | Authorization:  | none| Read-Only:      | false
 | Usage:          | business| Tags:           | [GrayText]#none#
@@ -178,7 +178,7 @@ HTTP request/response sessions to /helloWorld
 | Data Sent:      | JSON Request| Data Received:  | JSON Response
 |===
 
-[[pubic-clients]]
+[[public-clients]]
 == [OutOfScope]#Public Clients: out-of-scope#
 === Description
 Anonymous client on the public internet sending requests to the API.
@@ -190,7 +190,7 @@ Anonymous client on the public internet sending requests to the API.
 
 [.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Request* between *Public Clients* and *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
-<<unencrypted-communication,[SmallGrey]#unencrypted-communication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service#>>
+<<unencrypted-communication,[SmallGrey]#unencrypted-communication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
 [cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
 |===
@@ -204,7 +204,7 @@ Anonymous client on the public internet sending requests to the API.
 
 [cols="h,1,h,1",frame=none,grid=none]
 |===
-| ID:             3+| pubic-clients
+| ID:             3+| public-clients
 | Type:             | external-entity| Usage: | business
 | RAA:              | [GrayText]#out-of-scope#| Size: | component
 | Technology:       | browser| Tags: | [GrayText]#none#

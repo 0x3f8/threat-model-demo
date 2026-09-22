@@ -25,7 +25,7 @@ In total *2 trust boundaries* have been modeled during the threat modeling proce
 | ID:                | public-internet
 | Type:              | [.Twilight]#network-dedicated-hoster#
 | Tags:              | [GrayText]#none#
-| Assets inside:     | pubic-clients
+| Assets inside:     | public-clients
 | Boundaries nested: | [GrayText]#none#
 |===
 

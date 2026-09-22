@@ -30,7 +30,7 @@ The excel report tab is given the same name as your threat model title.  If this
     --skip-tags-excel --skip-risks-excel
 However, keep in mind that the title may still overrun the edge of the PDF report page.  
 
-It appears a lot of effort went into this tool but development has slowed signficantly since release. For that reason, a fork of the official repo is being demonstrated and this demo will touch on a few features such as infrastructure auto-discovery as well as risk methodologies not included in the official repo.
+It appears a lot of effort went into this tool but development has slowed significantly since release. For that reason, a fork of the official repo is being demonstrated and this demo will touch on a few features such as infrastructure auto-discovery as well as risk methodologies not included in the official repo.
 
 With these new features also come new issues.  Methodologies such as VAST require some specific wiring in the yaml to apply the rules properly.  Because of that, earlier branches of this tutorial may not work with all methodologies.  Once I've validated more model examples, I'll include those samples as well.
 
@@ -51,7 +51,7 @@ Draft requirements might be:
     API-->|HTTP response|Consumers
 ```
 
-Architecturally it might look this diagram.
+Architecturally, it might look this diagram.
 
 ```mermaid:
 flowchart LR
@@ -81,18 +81,18 @@ Response
 # Steps to produce the report
 
 1. Clone this repository
-1. Review the documenation at [Better-Threagile](https://github.com/Luv1881/better-threagile) to determine if and how you want to run the app.  The easiest and safest method is with docker 
+1. Review the documentation at [Better-Threagile](https://github.com/Luv1881/better-threagile) to determine if and how you want to generate threat models locally.  The easiest and safest method is with docker 
 1. If using docker, generate the default STRIDE threat model report from the base of the repo.  Running this will overwrite the existing report
     
     ```docker run --rm -it -v "$(pwd)":/app/work threagile:latest analyze-model --verbose --model /app/work/sample-model.yaml --output /app/work/report/```
 1.  Review the report outputs, understand the elements associated with the reports, and how they're generated.
 
-Before we examine the report artifacts, lets look at how the YAML is composed and what the minimum necessary blocks are for the default STRIDE methodology.  This will be helpful for understand the report content.
+Before we examine the report artifacts, lets look at how the YAML is composed and what the minimum necessary blocks are for the default STRIDE methodology.  This will be helpful for understanding the report content.
 
 # Threat Model Schema
 
-## Business Infomation
-Every report starts with the threagile version as well as relavant business information. this block is pretty self-explanatory and covers a number of business related items such as the app/report name, report author, management summary, etc.
+## Business Information
+Every report starts with the threagile version as well as relevant business information. This block is pretty self-explanatory and covers a number of business related items such as the app/report name, report author, management summary, etc.
 
     ```
     threagile_version: 1.0.0
@@ -126,7 +126,7 @@ When using the schema validation, you can hover over most fields to see a list o
 
 These enumerable hints are often used by the rules to properly calculate risks.
 
-Other free form fields are up to the busiess to determine what needs to be there.  Fields such as technical description and security requirements may help anyone reading the report understand the assumptions about the threat model, the nature of the application, or the authors assumptions about architecture or security controls.  Too much information may make the report hard to read.  Too little information may not paint the whole picture.
+Other free form fields are up to the business to determine what needs to be there.  Fields such as technical description and security requirements may help anyone reading the report understand the assumptions about the threat model, the nature of the application, or the authors assumptions about architecture or security controls.  Too much information may make the report hard to read.  Too little information may not paint the whole picture.
 
 ## Tags
 
@@ -155,7 +155,7 @@ Tags are used to
 
 For instance, technology assets only have three types - process, data-store, and external-entity.  You might want to use tags to call out specific frameworks, languages, or other descriptors that you could use in a custom rule.
 
-## Core elementsa   
+## Core elements
 The next several sections are the core of the threat model. Each asset type - data, technical, trust boundaries, and shared runtimes define the shape of your application and directly affect the generated output. Each of these asset blocks begins with the asset type and if hinting is working correctly, you can generate an asset stub.
 
     data_assets:
@@ -185,7 +185,7 @@ Data assets define just that - data that is either in transit or at rest.  This 
             justification_cia_rating: >
               We're just doing hello world, so no need for any special CIA ratings here. Right?
 
-Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in stub model that can be generated.  They're mostly self explanitory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
+Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in stub model that can be generated.  They're mostly self-explanatory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
 
 One important thing to note about each of the CIA elements.  You should assume a threat mindset when deciding how to rate each element.  Each data asset is going to require its own rating and these directly affect how risk are calculated in the reports.  A web page data asset (html) built as a static object being served to the public may truly only rate public for confidentiality. However, a page intended to be internal that may display something like a corporate directory should be given a more strict value.  What if there's a regulation that certain data elements are present on your public web page, such as how to make a FOIA request?  Even though that might still be static and public, the availability and integrity of that data is now much more critical. By classifying based on what damage, cost, or reputation impact a threat could impose, you'll find your reports surfacing more valuable information for you to consider.
 
@@ -227,7 +227,7 @@ Data assets don't just reside in the ether even if they travel across it! Techni
             - serialization
         communication_links:
             Public Greeting API Response:
-                target: pubic-clients
+                target: public-clients
                 description: HTTP response from /helloWorld
                 protocol: http
                 authentication: none
@@ -241,10 +241,10 @@ Data assets don't just reside in the ether even if they travel across it! Techni
                 data_assets_received:
                    - json-request
 
-Much like data assets, you need to define your CIA levels.  However, there are many more elements to be considered.  Does a humen interact directly with it?  Are the redunant systems in place? Is it internet facing?  Is it encrypting the data and if so, how?  Is it "off the shelf" or does it contain custom developed components?  What data elements are processed or stored and what format is that data?  Lasty, is it communicating with any other technical assets?
+Much like data assets, you need to define your CIA levels.  However, there are many more elements to be considered.  Does a humen interact directly with it?  Are the redundant systems in place? Is it internet facing?  Is it encrypting the data and if so, how?  Is it "off the shelf" or does it contain custom developed components?  What data elements are processed or stored and what format is that data?  Lastly, is it communicating with any other technical assets?
 
 ### Trust Boundaries
-Trust boundaries are just what they sound like.  This is where you define where technical assets reside.  Are they on the public internet?  Are they on your corporate network behind layered defenses?  How you define your trust boudaries is very important and as your threat model continues to evolve, should better reflect the reality and complexity of your environment.
+Trust boundaries are just what they sound like.  This is where you define where technical assets reside.  Are they on the public internet?  Are they on your corporate network behind layered defenses?  How you define your trust boundaries is very important and as your threat model continues to evolve, should better reflect the reality and complexity of your environment.
 
     trust_boundaries:
         Public Internet:
@@ -253,11 +253,11 @@ Trust boundaries are just what they sound like.  This is where you define where 
             type: network-dedicated-hoster
             tags: []
             technical_assets_inside:
-                - pubic-clients
+                - public-clients
             trust_boundaries_nested: []
 
 ### Shared Runtimes
-While not defined in our base threat model, shared runtimes will play an important part in your risk analysis as your threat model evolves.  Much like data needs somewhere to live, one or more of your technical assets is likely hosting one or more other technical assets.  A physical server could be hosting a web application, database, and FTP server which would be defined as a shared runtime.  Other examples would include a Virtual Host running multipleGuests or even a container orchestration platform.
+While not defined in our base threat model, shared runtimes will play an important part in your risk analysis as your threat model evolves.  Much like data needs somewhere to live, one or more of your technical assets is likely hosting one or more other technical assets.  A physical server could be hosting a web application, database, and FTP server which would be defined as a shared runtime.  Other examples would include a Virtual Host running multiple guests or even a container orchestration platform.
 
 A simple version of a shared runtime might look like this
 
@@ -280,29 +280,29 @@ As I noted in the syllabus, we're not going to cover many of the optional elemen
 # Report Artifacts
 
 Whether you generated a report or use the pre-generated reports, you now have a set of artifacts for your app that include
-* Data FLow Diagrams
+* Data Flow Diagrams
 * A Threat Model Report in PDF and AsciiDoc formats
 * Itemized risks in json and xlsx
 * Json outputs for technical assets as well as stats
-* A tags table in xlsx format showing which tags are associated which each asset
+* A tags table in xlsx format showing which tags are associated with each asset
 
 Each report is generated from a boilerplate that ensures consistent reporting across teams using this tool.  In addition to consistency, security and architecture may even promote certain threat models as trusted resources, allowing new projects to quickly adopt a pre-approved architecture with an associated threat model as a starting point - saving time and ensuring minimum standards are met.
 
 Much of the report provides summaries of data included in the threat model such as a list of tags, which assets they're associated with, the list of assets by type, etc.  We won't dive into those as we're most interested in understanding the potential risks and recommended remediation steps.
 
 ## Table of Contents
-While the table of contents is pretty self explanitory, it's good to know that each heading is clickable and will take you directly to the related section.  Additionally, most risks can be clicked to drill down into their detailed descriptions.  The report is fully linked so take advantage of that once you're familiar with the report structure and understand what matters most to you or your team. 
+While the table of contents is pretty self-explanatory, it's good to know that each heading is clickable and will take you directly to the related section.  Additionally, most risks can be clicked to drill down into their detailed descriptions.  The report is fully linked so take advantage of that once you're familiar with the report structure and understand what matters most to you or your team. 
 
 ## Management Summary
-The management summary is mostly boilerplate about the toolkit and how risks were determined.  It include a pie chart of the potential risks by count and how many have been marked as false positives, mitigated, etc, and the description of the application provided.
+The management summary is mostly boilerplate about the toolkit and how risks were determined.  It includes a pie chart of the potential risks by count and how many have been marked as false positives, mitigated, etc, and the description of the application provided.
 
 ## Impact analysis, mitigation, and residual risks.
 The next several sections highlight the risks.  The impact analysis provides a full list of risks that were discovered with a pie chart showing their distribution by risk and review status.
 
-### Imapct Analysis Chart
+### Impact Analysis Chart
 ![Impact Analysis](./images/ImpactAnalysis.png)
 
-The accompanying risk summary gives a short descrption of the risk with estimated liklihood and impact 
+The accompanying risk summary gives a short description of the risk with estimated likelihood and impact 
 
 ### Risk Summary
 ![Risk Summary](./images/InitialRiskRegister.png)
@@ -319,25 +319,25 @@ As with the initial risks, and following an inventory of assets, is the summary 
 
 The next two sections are the STRIDE and Business classifications for the same risks summaries.  The STRIDE section groups the summaries by Spoofing, Tampering, Repudiation, Information Disclosure, and Elevation of Privilege risks.  The Business section groups them by the reviewing organization. 
 
-This may seem redundant but, depending on who's reading the report, the reviewer may want to jump straight to any one of these sections from the table of contents from a context that's most relavant to their role.
+This may seem redundant but, depending on who's reading the report, the reviewer may want to jump straight to any one of these sections from the table of contents from a context that's most relevant to their role.
 
 ## Relative Attacker Attractiveness
-According to the summary, this section has calcluated an attractiveness value and "the higher the RAA, the more interesting it is for an attacker to compromise the asset." Getting started, it may be beneficial to mitigate risks for assets with the highest RAA, but it's going to depend on a number of factors.  Because of that, you might be able to mitigate risks around the most attractive assets because their connections and proximity to other assets affects their scores as well. 
+According to the summary, this section has calculated an attractiveness value and "the higher the RAA, the more interesting it is for an attacker to compromise the asset." Getting started, it may be beneficial to mitigate risks for assets with the highest RAA, but it's going to depend on a number of factors.  Because of that, you might be able to mitigate risks around the most attractive assets because their connections and proximity to other assets affects their scores as well. 
 
 ## Data Mapping
-The data mapping section explains itself well and doesn't need much here.  Here you'll gain a high level overview of which data assets distribution across technical assets.  Objects are color coded by data breach and risk probability while the lines help indicate if a technical asset processes (dashed) or stores (solid) the the data.
+The data mapping section explains itself well and doesn't need much here.  Here you'll gain a high level overview of how data assets are distributed across technical assets.  Objects are color coded by data breach and risk probability while the lines help indicate if a technical asset processes (dashed) or stores (solid) the data.
 
 
 ![Data Mapping Diagram](./images/DataMapping.png)
 
 ## Assets Out of Scope
-After data mapping comes assets out of scope  This is simply a list of technical assets that may be important to the model, but require no risk calculation.  In this model we have client we browsers.  Because these are public entities that we can't control we just need to understand the risk they pose to our model.
+After data mapping comes assets out of scope  This is simply a list of technical assets that may be important to the model, but require no risk calculation.  In this model we have client web browsers.  Because these are public entities that we can't control we just need to understand the risk they pose to our model.
 
 ## Potential Model Failures
-This section appears to surface a list of things that are nice to have, but depending on the scope and requirements of your project, may not be necessary.   This report suggests we might want builld infrastructure and a vault to store secrets.
+This section appears to surface a list of things that are nice to have, but depending on the scope and requirements of your project, may not be necessary.   This report suggests we might want build infrastructure and a vault to store secrets.
 
 ## Questions
-The questions sections is meant to be filled out as a team works through their model and they're unsure of the outcomes.  It is optional but shouldn't be overlooked.
+The questions section is meant to be filled out as a team works through their model and they're unsure of the outcomes.  It is optional but shouldn't be overlooked.
 
 ## Risks By Category
 At this point, the risks are going to have more details to help understand their context.  The categories may be dynamic based on the vulnerabilities discovered so we'll just highlight the common pattern here.
@@ -351,7 +351,7 @@ As you can see, we have a much more detailed analysis of the risk.  Each risk sh
 The impact section gives a summary of how the risk may affect your application.
 
 ### Risk Rating
-This summary is a reminder of that the asset as well as the data it processes affect its rating.  More importantly, it list criteria to consider for false positives as well as plausible steps to mitigate the risk.  Each of these risk rating should include links to help validate and mitigate the risks.
+This summary is a reminder of that the asset as well as the data it processes affect its rating.  More importantly, it list criteria to consider for false positives as well as plausible steps to mitigate the risk.  Each of these risk ratings should include links to help validate and mitigate the risks.
 
 ## Risk Findings
 The risk findings section is a list of which assets are impacted, their likelihood of exploitation, and the potential impact.
@@ -365,11 +365,11 @@ This section gives the reviewer an asset by asset overview of risks.  It shows
 ![Tech Asset Screenshot](./images/TechAsset-1.png)
 ![Tech Asset Screenshot](./images/TechAsset-2.png)
 
-## Breach Probablility
+## Breach Probability
 After technical assets we'll have a list of data assets.  This list shows
 * Which Data Type is impacted
 * A detailed summary of the Data Type
-* Probablility of a breach
+* Probability of a breach
 * A list of the risks that affected this rating sorted by the likelihood that they contribute to the breach
 
 ![Data Breach Probability Summary](./images/BreachProbability.png)
@@ -379,7 +379,7 @@ Much like we have with other assets, this list summarizes the trust boundaries s
 ![Trust Boundaries Screenshot](./images/TrustBoundaries.png)
 
 ## Shared Runtimes
-The penultimate section in the report is the list of Shared Runtimes.   Again, this would just be a summary of technical assets that share a common tecnical asset such as a kubernetes cluster shared runtime that process and stores multiple other technical assets.
+The penultimate section in the report is the list of Shared Runtimes.   Again, this would just be a summary of technical assets that share a common technical asset such as a kubernetes cluster shared runtime that process and stores multiple other technical assets.
 
 ## Model Checkpoint
 The last section, other than a disclaimer, lists the version of threagile, build timestamp, report execution timestamp, the model filename, and a sha256 hash of the model file.
@@ -399,9 +399,9 @@ Of the most interest are the risks.* files. These files are the enumerated risks
         "exploitation_likelihood": "likely",
         "exploitation_impact": "medium",
         "title": "<b>Missing Authentication</b> covering communication link <b>Public Greeting API Request</b> from <b>Public Clients</b> to <b>Python HTTP Service</b>",
-        "synthetic_id": "missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service",
+        "synthetic_id": "missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service",
         "most_relevant_technical_asset": "python-http-service",
-        "most_relevant_communication_link": "pubic-clients>public-greeting-api-request",
+        "most_relevant_communication_link": "public-clients>public-greeting-api-request",
         "data_breach_probability": "possible",
         "data_breach_technical_assets": [
             "python-http-service"
@@ -424,7 +424,7 @@ Other files available are:
 
 **technical-assets.json**: A JSON representation of the technical assets defined in the model.
 
-**data-*-diagram.png**: Hihger resolution version of the diagrams presented in the PDF report. 
+**data-*-diagram.png**: Higher resolution version of the diagrams presented in the PDF report. 
 
 # End of Lesson 1
 

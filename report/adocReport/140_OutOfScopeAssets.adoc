@@ -6,6 +6,6 @@ This chapter lists all technical assets that have been defined as out-of-scope.
 Each one should be checked in the model whether it should better be included in the overall risk analysis{fn-tech-assets}:
 
 
-<<pubic-clients,[OutOfScope]#Public Clients : out-of-scope#>>::
+<<public-clients,[OutOfScope]#Public Clients : out-of-scope#>>::
   Client devices and browsers are not managed by this application.
 

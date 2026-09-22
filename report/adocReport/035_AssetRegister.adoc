@@ -2,7 +2,7 @@
 
 == Technical Assets
 
-<<pubic-clients,*Public Clients*: out-of-scope>>::
+<<public-clients,*Public Clients*: out-of-scope>>::
   Anonymous client on the public internet sending requests to the API.
 
 <<python-http-service,*Python HTTP Service*>>::

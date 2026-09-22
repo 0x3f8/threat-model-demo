@@ -210,7 +210,7 @@
             }
           ],
           "partialFingerprints": {
-            "threagileSyntheticId": "missing-authentication@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+            "threagileSyntheticId": "missing-authentication@public-clients\u003epublic-greeting-api-request@public-clients@python-http-service"
           },
           "properties": {
             "confidence": 0,
@@ -239,7 +239,7 @@
             }
           ],
           "partialFingerprints": {
-            "threagileSyntheticId": "missing-authentication-second-factor@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+            "threagileSyntheticId": "missing-authentication-second-factor@public-clients\u003epublic-greeting-api-request@public-clients@python-http-service"
           },
           "properties": {
             "confidence": 0,
@@ -384,7 +384,7 @@
             }
           ],
           "partialFingerprints": {
-            "threagileSyntheticId": "server-side-request-forgery@python-http-service@pubic-clients@python-http-service\u003epublic-greeting-api-response"
+            "threagileSyntheticId": "server-side-request-forgery@python-http-service@public-clients@python-http-service\u003epublic-greeting-api-response"
           },
           "properties": {
             "confidence": 0,
@@ -413,14 +413,14 @@
             }
           ],
           "partialFingerprints": {
-            "threagileSyntheticId": "unencrypted-communication@pubic-clients\u003epublic-greeting-api-request@pubic-clients@python-http-service"
+            "threagileSyntheticId": "unencrypted-communication@public-clients\u003epublic-greeting-api-request@public-clients@python-http-service"
           },
           "properties": {
             "confidence": 0,
             "dataBreachProbability": "possible",
             "exploitationImpact": "medium",
             "exploitationLikelihood": "likely",
-            "mostRelevantAsset": "pubic-clients",
+            "mostRelevantAsset": "public-clients",
             "severity": "elevated",
             "status": "unchecked"
           }
@@ -442,7 +442,7 @@
             }
           ],
           "partialFingerprints": {
-            "threagileSyntheticId": "unencrypted-communication@python-http-service\u003epublic-greeting-api-response@python-http-service@pubic-clients"
+            "threagileSyntheticId": "unencrypted-communication@python-http-service\u003epublic-greeting-api-response@python-http-service@public-clients"
           },
           "properties": {
             "confidence": 0,
