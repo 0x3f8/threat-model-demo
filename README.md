@@ -434,4 +434,4 @@ In the next lesson we'll learn how to mitigate risks within the model.
 
 
 
-[Next Step](LINK_TO_NEXT_BRANCH)
+[Next Step - Checking and Mitigating Risks](https://github.com/0x3f8/threat-model-demo/tree/Checking-and-Mitigating-Risks)
