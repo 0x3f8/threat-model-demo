@@ -34,6 +34,8 @@ It appears a lot of effort went into this tool but has since slowed signficantly
 
 With these new features also come new issues.  Methodologies such as VAST require some specific wiring in the yaml to apply the rules properly.  Because of that, earlier branches of this tutorial may not work with all methodologies.  Once I've validated more model examples, I'll include those samples as well.
 
+Risk rules summary at the end of the document isn't populating.
+
 # The Concept Application
 
 This threat model is based on the concept of a very simple Hello World API endpoint that accepts json data and returns a hello world type response payload. 
@@ -323,10 +325,112 @@ This may seem redundant but, depending on who's reading the report, the reviewer
 According to the summary, this section has calcluated an attractiveness value and "the higher the RAA, the more interesting it is for an attacker to compromise the asset." Getting started, it may be beneficial to mitigate risks for assets with the highest RAA, but it's going to depend on a number of factors.  Because of that, you might be able to mitigate risks around the most attractive assets because their connections and proximity to other assets affects their scores as well. 
 
 ## Data Mapping
-The data mapping section explains itself well and doesn't need much here.  Here you'll gain a high level overview of which data assets distribution across technical assets.  Objects are color coded by data breach and risk probability while the lines help indicate if a technical asset processes or stores the the data.
+The data mapping section explains itself well and doesn't need much here.  Here you'll gain a high level overview of which data assets distribution across technical assets.  Objects are color coded by data breach and risk probability while the lines help indicate if a technical asset processes (dashed) or stores (solid) the the data.
 
 
 ![Data Mapping Diagram](./images/DataMapping.png)
+
+## Assets Out of Scope
+After data mapping comes assets out of scope  This is simply a list of technical assets that may be important to the model, but require no risk calculation.  In this model we have client we browsers.  Because these are public entities that we can't control we just need to understand the risk they pose to our model.
+
+## Potential Model Failures
+This section appears to surface a list of things that are nice to have, but depending on the scope and requirements of your project, may not be necessary.   This report suggests we might want builld infrastructure and a vault to store secrets.
+
+## Questions
+The questions sections is meant to be filled out as a team works through their model and they're unsure of the outcomes.  It is optional but shouldn't be overlooked.
+
+## Risks By Category
+At this point, the risks are going to have more details to help understand their context.  The categories may be dynamic based on the vulnerabilities discovered so we'll just highlight the common pattern here.
+
+![Risk Details](./images/Risk%20Details.png)
+
+### Description
+As you can see, we have a much more detailed analysis of the risk.  Each risk should have a technical description with a link to a technical article to better understand that risk.
+
+### Impact
+The impact section gives a summary of how the risk may affect your application.
+
+### Risk Rating
+This summary is a reminder of that the asset as well as the data it processes affect its rating.  More importantly, it list criteria to consider for false positives as well as plausible steps to mitigate the risk.  Each of these risk rating should include links to help validate and mitigate the risks.
+
+## Risk Findings
+The risk findings section is a list of which assets are impacted, their likelihood of exploitation, and the potential impact.
+![Risk Findings](./images/Risk%20Findings.png)
+
+## Risk by Technical Asset
+This section gives the reviewer an asset by asset overview of risks.  It shows
+* Details about the asset such as the description, CIA ratings, and communication links
+* The list of risks that apply to the asset
+
+![Tech Asset Screenshot](./images/TechAsset-1.png)
+![Tech Asset Screenshot](./images/TechAsset-2.png)
+
+## Breach Probablility
+After technical assets we'll have a list of data assets.  This list shows
+* Which Data Type is impacted
+* A detailed summary of the Data Type
+* Probablility of a breach
+* A list of the risks that affected this rating sorted by the likelihood that they contribute to the breach
+
+![Data Breach Probability Summary](./images/BreachProbability.png)
+
+## Trust Boundaries
+Much like we have with other assets, this list summarizes the trust boundaries so that the reviewer can gain an understanding without drilling into the model itself.
+![Trust Boundaries Screenshot](./images/TrustBoundaries.png)
+
+## Shared Runtimes
+The penultimate section in the report is the list of Shared Runtimes.   Again, this would just be a summary of technical assets that share a common tecnical asset such as a kubernetes cluster shared runtime that process and stores multiple other technical assets.
+
+## Model Checkpoint
+The last section, other than a disclaimer, lists the version of threagile, build timestamp, report execution timestamp, the model filename, and a sha256 hash of the model file.
+
+![Risk Rules Checkpoint](./images/RiskRules.png)
+
+These give the team and reviewer a way to verify and validate the threat model.  It would also appear that a list of the rules that were used in this report should have been populated.  Perhaps this is only populated if custom rules are considered? TBD
+
+# Other Report Artifacts
+So far we've covered the business facing PDF report.  As mentioned in the syllabus, there are a number of default artifacts that are produced that can be used to enhance your workflow since many are easily consummable JSON format.
+
+Of the most interest are the risks.* files. These files are the enumerated risks from your model, each entry with a unique identifier that can be used later during the mitigation steps. 
+
+    {
+        "category": "missing-authentication",
+        "severity": "elevated",
+        "exploitation_likelihood": "likely",
+        "exploitation_impact": "medium",
+        "title": "<b>Missing Authentication</b> covering communication link <b>Public Greeting API Request</b> from <b>Public Clients</b> to <b>Python HTTP Service</b>",
+        "synthetic_id": "missing-authentication@pubic-clients>public-greeting-api-request@pubic-clients@python-http-service",
+        "most_relevant_technical_asset": "python-http-service",
+        "most_relevant_communication_link": "pubic-clients>public-greeting-api-request",
+        "data_breach_probability": "possible",
+        "data_breach_technical_assets": [
+            "python-http-service"
+        ]
+    },
+
+
+ This output comes in a standard json format, a GitLab SAST compatible file, sarif format, and lastly XLSX. If they're not going to be consumed, you can easily skip those outputs with the corresponding switches.
+
+      --skip-risks-excel                   skip generating risks excel
+      --skip-risks-gl-sast                 skip generating risks gitlab sast report
+      --skip-risks-json                    skip generating risks json
+      --skip-risks-sarif                   skip generating risks sarif
+
+Other files available are:
+
+**stats.json**: General statistics by risk category, etc.
+
+**tags.xlsx**: A matrix of tags and the assets associated with each.
+
+**technical-assets.json**: A JSON representation of the technical assets defined in the model.
+
+**data-*-diagram.png**: Hihger resolution version of the diagrams presented in the PDF report. 
+
+# End of Lesson 1
+
+
+In the next lesson we'll learn how to mitigate risks within the model.
+
 
 
 
