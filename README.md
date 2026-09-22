@@ -1,7 +1,7 @@
 # Threat Model Demo Part 1 - Using threagile for threat modeling
 
 
-This repo is used to demonstrate using Threagile (batter-threagile) as a threat model tool.  The purpose of this repo is to
+This repo is used to demonstrate using Threagile (better-threagile) as a threat model tool.  The purpose of this repo is to
 
 * Demonstrate how the threat model should live as a versioned artifact next to your code. We'll use branches to show threat model evolution.
 * Demonstrate an iterative process of developing a threat model from a concept app to an app that has incorporated recommendations from the threat model output
@@ -15,22 +15,22 @@ This repo is used to demonstrate using Threagile (batter-threagile) as a threat 
 
 This branch is your starting point. It provides a sample threat model starter based on a very simple application. Because an action hasn't yet been configured to generate threat model reports, you can either refer to the threat model artifacts in the /report folder, or follow these steps to generate your own. For stability, I recommend forking or cloning the Threagile Repo so you have a consistent copy to work from.  
 
-## Prequisites
+## Prerequisites
 
 You don't really have to install anything to use this tutorial.  If working with code and generating threat models helps you learn better, you are certainly welcome to install the necessary apps noted below.
 
-This repo targets VSCode and contains settings related to schema validation and auto-completion.  If you're not using VSCode, refer to the Threagile repo for instructions for other IDEs.
+This repo targets VSCode and contains settings related to schema validation and auto-completion.  If you're not using VSCode, refer to the better-threagile repo for instructions for other IDEs.
 
 ## Known bugs and issues
 
 The threagile playground on the official website isn't kept up-to-date and threat models generated using newer versions may fail in that playground.  As a best practice, you wouldn't want to upload your threat models to a third-party site anyway.
 
-The excel report tab is give the same name as your threat model title.  If this exceeds 31 characters then threagile report generation will fail. I recommend a shorter title because the excel reports are valuable.  If you insist on a long title, you can add the following flags to your report generation to generate the report.
+The excel report tab is given the same name as your threat model title.  If this exceeds 31 characters then threagile report generation will fail. I recommend a shorter title because the excel reports can be valuable.  If you insist on a long title, you can add the following flags to your report generation to skip the excel output.
 
     --skip-tags-excel --skip-risks-excel
-However, the title may still overrun the edge of the PDF report page.  
+However, keep in mind that the title may still overrun the edge of the PDF report page.  
 
-It appears a lot of effort went into this tool but has since slowed signficantly since release. For that reason, a fork of the official repo is being demonstrated and this demo will touch on a few features such as infrastructure auto-discovery as well as risk methodologies not included in the official repo.
+It appears a lot of effort went into this tool but development has slowed signficantly since release. For that reason, a fork of the official repo is being demonstrated and this demo will touch on a few features such as infrastructure auto-discovery as well as risk methodologies not included in the official repo.
 
 With these new features also come new issues.  Methodologies such as VAST require some specific wiring in the yaml to apply the rules properly.  Because of that, earlier branches of this tutorial may not work with all methodologies.  Once I've validated more model examples, I'll include those samples as well.
 
@@ -87,7 +87,7 @@ Response
     ```docker run --rm -it -v "$(pwd)":/app/work threagile:latest analyze-model --verbose --model /app/work/sample-model.yaml --output /app/work/report/```
 1.  Review the report outputs, understand the elements associated with the reports, and how they're generated.
 
-Before we examine the report artifacts, lets look at how the YAML is composed and what the necessary stub components are for the default STRIDE methodology.  This will be helpful for understand the report.
+Before we examine the report artifacts, lets look at how the YAML is composed and what the minimum necessary blocks are for the default STRIDE methodology.  This will be helpful for understand the report content.
 
 # Threat Model Schema
 
@@ -120,13 +120,13 @@ Every report starts with the threagile version as well as relavant business info
     security_requirements:
     PHI/PII: Usage of PHI/PII is not allowed in this application.  The application should not be used to process any sensitive data.```
 
-When using the schema validation, you can hover over any field that has required values and see a list of valid options, such as for business criticality.
+When using the schema validation, you can hover over most fields to see a list of valid options, such as for business criticality.
 
 ![Tool tip hint showing enumerable hints](./images/tool-tips.png)
 
-These enumerable hints are often used by the rules to infer which risks to include or exclude from the report.
+These enumerable hints are often used by the rules to properly calculate risks.
 
-Other free form fields are up to the author to determine what needs to be there.  Fields such as technical description and security requirements may help anyone reading the report understand the assumptions about the threat model, the nature of the application, or the authors assumptions about architecture or security controls.  Too much information may make the report hard to read.  Too little information may not paint the whole picture.
+Other free form fields are up to the busiess to determine what needs to be there.  Fields such as technical description and security requirements may help anyone reading the report understand the assumptions about the threat model, the nature of the application, or the authors assumptions about architecture or security controls.  Too much information may make the report hard to read.  Too little information may not paint the whole picture.
 
 ## Tags
 
@@ -155,8 +155,8 @@ Tags are used to
 
 For instance, technology assets only have three types - process, data-store, and external-entity.  You might want to use tags to call out specific frameworks, languages, or other descriptors that you could use in a custom rule.
 
-## Core elements
-The next several sections are the core of the threat model. Each asset type - data, technical, trust boundaries, and shared runtimes define the shape of your application and directly affect the generated output. Each of these asset blocks beings with the associated schema definition and each has tool-tip descriptions
+## Core elementsa   
+The next several sections are the core of the threat model. Each asset type - data, technical, trust boundaries, and shared runtimes define the shape of your application and directly affect the generated output. Each of these asset blocks begins with the asset type and if hinting is working correctly, you can generate an asset stub.
 
     data_assets:
     technical_assets:
@@ -165,7 +165,7 @@ The next several sections are the core of the threat model. Each asset type - da
 
 
 ### Data assets
-Data assets define just that - data that is either in transit or at rest.  Other than trust boundaries, this asset is one of the smaller elements and easy to comprehend.  
+Data assets define just that - data that is either in transit or at rest.  This asset type is one of the smaller elements and easy to comprehend.  
 
     data_assets:
 
@@ -185,7 +185,7 @@ Data assets define just that - data that is either in transit or at rest.  Other
             justification_cia_rating: >
               We're just doing hello world, so no need for any special CIA ratings here. Right?
 
-Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in samle stub model.  They're mostly self explanitory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
+Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in stub model that can be generated.  They're mostly self explanitory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
 
 One important thing to note about each of the CIA elements.  You should assume a threat mindset when deciding how to rate each element.  Each data asset is going to require its own rating and these directly affect how risk are calculated in the reports.  A web page data asset (html) built as a static object being served to the public may truly only rate public for confidentiality. However, a page intended to be internal that may display something like a corporate directory should be given a more strict value.  What if there's a regulation that certain data elements are present on your public web page, such as how to make a FOIA request?  Even though that might still be static and public, the availability and integrity of that data is now much more critical. By classifying based on what damage, cost, or reputation impact a threat could impose, you'll find your reports surfacing more valuable information for you to consider.
 
