@@ -3,7 +3,7 @@
 Now that we've created a threat model and generated a report we'll want to
 * review the risks
 * update the model
-* regenerate the report to reflect updates
+* regenerate the report with each update to reflect updates
 
 ## Reviewing Risks
 There are a number of ways to review your risk outputs, but the most programmatically oriented way may be to review the [JSON Risk Regstry](./report/risks.json).  For a more visual friendly format, there is also an [Excel Spreadsheet](./report/risks.xlsx).
@@ -47,12 +47,13 @@ We'll title each element by it's synthetic id.
             date: 2026-01-02
             checked_by: Alice
 
-If we now regenerate our report, we'll notice a number of changes.
-In order we first have the summary which now shows one risk has been accepted.
+If we now regenerate our [report](./report/02-accpeted_risk_report.pdf), we'll notice a number of changes.
+
+First you'll notice the summary which now shows one risk has been accepted.
 
 ![Management Summary Pie Chart](./images/01-AcceptedPieChart.png)
 
-The next update is to the larger Risk Track details which, honestly, just presents the risks with a couple of more specific charts and graphs.
+The next update is to the Risk Mitigation details which, honestly, just presents the risks with a couple of more specific charts and graphs.
 
 ![Risk Mitigation charts](./images/01-TrackingStatus.png)
 
@@ -68,10 +69,14 @@ Next, we'll see a similar update in the Python HTTP Service
 
 **NOTE:**  While this covers what you would expect to see, there is one detail you might be wondering about.
 
-In the Risk Mitigation section early in the report, it details the status of the risks and that we've accept 1 of these risks.   However, in the following section for Impact Analysis, 10 of 10 risks are still listed as remaining. Why?  This is because we've accepted the risk instead of mitigating the risk or otherwise negating it in some other way.  Should we make a change to this endpoint and the business intent is that authentication is required, we have no mitigation and the risk still remains.  To prove that with a different risk, lets actually mitigate the Second Factor Authentication risk.  If authentication isn't required, or even possible in this case, then this risk is mitigated.
+In the Risk Mitigation section early in the report, it details the status of the risks and that we've accept 1 of these risks.   However, in the following section for Impact Analysis, 10 of 10 risks are still listed as remaining.
+
+![Impact Analysis with 10 risks](./images/01-ImpactAnalysis.png)
+
+Why?  This is because we've accepted the risk instead of mitigating the risk or otherwise negating it in some other way.  Should we make a change to this endpoint and the business intent is that authentication is required, we have no mitigation and the risk still remains.  To prove that with a different risk, lets actually mitigate the Second Factor Authentication risk.  If authentication isn't required, or even possible in this case, then this risk is mitigated.
 
     missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service:
-        description: There is no authentication method, so there is no second factor authentication required.
+        description: All methods of authentication should require MFA
         status: mitigated
         justification: >
         We don't allow authentication at all, so MFA is pointless.
@@ -79,7 +84,7 @@ In the Risk Mitigation section early in the report, it details the status of the
         date: 2026-01-02
         checked_by: Alice
 
-With the new mitigation added to the model we can re-run the report and confirm that, instead of 10 remaining risks, we now only have 9.
+With the new mitigation added to the model we can re-run the [report](./report/03-mitigated_risk_report.pdf) and confirm that, instead of 10 remaining risks, we now only have 9.
 
 ![Impact Ananlysis with 9 risks](./images/02-RiskMitigatedProven.png)
 
@@ -104,7 +109,7 @@ The more obvious way to fix this risk is to use the safer method and remove seri
         date: 2026-01-02
         checked_by: Alice
 
-Now if we run our report again and look at the Data Mapping Chart we'll see that our report has changed in a positive way.
+Now if we run our [report](./report/04-significant_risk_mitigated_report.pdf) again and look at the Data Mapping Chart we'll see that our report has changed in a positive way.
 
 ![Data Mapping Risk decreased](./images/DataMappingMitigated.png)
 
