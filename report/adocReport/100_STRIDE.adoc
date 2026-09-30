@@ -1,7 +1,7 @@
 = STRIDE Classification of Identified Risks
 :fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
 
-This chapter clusters and classifies the risks by STRIDE categories: In total *10 potential risks* have been identified during the threat modeling process of which *0 in the Spoofing* category, *4 in the Tampering* category, *0 in the Repudiation* category, *4 in the Information Disclosure* category, *0 in the Denial of Service* category, and *2 in the Elevation of Privilege* category.{fn-risk-findings}
+This chapter clusters and classifies the risks by STRIDE categories: In total *11 potential risks* have been identified during the threat modeling process of which *0 in the Spoofing* category, *4 in the Tampering* category, *0 in the Repudiation* category, *4 in the Information Disclosure* category, *1 in the Denial of Service* category, and *2 in the Elevation of Privilege* category.{fn-risk-findings}
 
 == Spoofing
 No risk identified.
@@ -35,7 +35,10 @@ If this risk is unmitigated, attackers might be able to easier steal config secr
 
 
 == Denial of Service
-No risk identified.
+<<unbounded-search-query-cost,[.HighRisk]#High: *Unbounded Search Query Cost*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _High_ impact.#>>::
+Attackers could exhaust application and database resources, causing slow responses or an outage for legitimate users.
+
+
 
 == Elevation of Privilege
 <<missing-authentication,[.ElevatedRisk]#Elevated: *Missing Authentication*: 1/1 unmitigated Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::

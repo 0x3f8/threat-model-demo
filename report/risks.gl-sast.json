@@ -150,6 +150,31 @@
       ]
     },
     {
+      "id": "a35e89fced89d89b035d6204b412e1c18c3b13f993261fe09ccd27bba306df4d",
+      "name": "Unbounded Search Query Cost at Python HTTP Service",
+      "description": "Unbounded Search Query Cost at Python HTTP Service",
+      "severity": "High",
+      "solution": "Add server-side query limits, pagination limits, timeouts, and rate limits before exposing the search endpoint to public clients.\n",
+      "location": {
+        "file": "/app/work/sample-model.yaml",
+        "start_line": 1,
+        "end_line": 1
+      },
+      "identifiers": [
+        {
+          "type": "threagile_risk_category",
+          "name": "Threagile: unbounded-search-query-cost",
+          "value": "unbounded-search-query-cost"
+        },
+        {
+          "type": "cwe",
+          "name": "CWE-400",
+          "value": "400",
+          "url": "https://cwe.mitre.org/data/definitions/400.html"
+        }
+      ]
+    },
+    {
       "id": "b4339f4a7b215367548b3a49705a6d9899c717a2d40e4ef61e5277ce638dc512",
       "name": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service",
       "description": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service",

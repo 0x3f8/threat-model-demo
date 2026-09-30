@@ -127,67 +127,6 @@ Previously, the objects were red, indicating more risk.
 
 ![Data Mapping Risk unmitigated](./images/DataMapping.png)
 
-## Undefined Risks
-
-What If Threagile Does Not Identify a Risk? The generated report is based on the rules Threagile knows about and the details captured in the model. That does not mean a risk is not real just because it is missing from the report.
-
-A team might identify a risk during architecture review, testing, an incident, vulnerability research, or because of a new CVE/CWE pattern. For example, a new zero-day affecting a dependency or a business-logic weakness might not have a built-in rule yet. In that case, we can add the finding directly to the model with individual_risk_categories.
-
-This creates a risk finding that appears in the report and can be managed through the normal risk_tracking workflow. It is not automatic detection. The team is documenting a known risk until it is mitigated, accepted, determined to be a false positive, or eventually turned into a reusable custom risk rule. The schema supports both the category-level context and individually identified findings, including likelihood, impact, severity, affected assets, and data-breach probability.
-
-The following example models an application-specific risk where public API clients can cause unbounded work through an expensive search request. This can be related to CWE-400, Uncontrolled Resource Consumption, but the actual issue is a design-specific combination of unrestricted query complexity and no request budget. It may not be covered by a built-in rule.
-
-```yaml
-individual_risk_categories:
-  unbounded-search-query-cost:
-    id: unbounded-search-query-cost
-    description: >
-      Public API requests can trigger expensive search operations without limits
-      on query complexity, pagination depth, or request rate.
-    impact: >
-      Attackers could exhaust application and database resources, causing slow
-      responses or an outage for legitimate users.
-    asvs: ""
-    cheat_sheet: ""
-    action: >
-      Add server-side query limits, pagination limits, timeouts, and rate limits
-      before exposing the search endpoint to public clients.
-    mitigation: >
-      Enforce maximum result sizes and query complexity, apply rate limiting, and
-      monitor for abnormal request patterns.
-    check: >
-      Test large pagination values, repeated requests, and expensive search
-      combinations while monitoring application and database resource use.
-    function: architecture
-    stride: denial-of-service
-    detection_logic: >
-      Identified during architecture review. This is not currently detected by a
-      built-in Threagile rule because query cost and request limits are not
-      modeled as standard asset properties.
-    risk_assessment: >
-      The public search endpoint can be repeatedly invoked by unauthenticated
-      clients and may execute costly queries against the backend datastore.
-    false_positives: >
-      This finding does not apply if the endpoint enforces effective server-side
-      request budgets, rate limits, and query execution limits.
-    model_failure_possible_reason: false
-    cwe: 400
-    risks_identified:
-      public-search-endpoint:
-        severity: high
-        exploitation_likelihood: likely
-        exploitation_impact: high
-        data_breach_probability: improbable
-        data_breach_technical_assets:
-          - python-http-service
-          - application-database
-        most_relevant_data_asset: ""
-        most_relevant_technical_asset: python-http-service
-        most_relevant_communication_link: public-clients>public-search-api-request
-        most_relevant_trust_boundary: internet
-        most_relevant_shared_runtime: ""
-```
-
 Hopefully this demonstrates the usefulness of threat modeling with valid examples of risks, accepted risks, and mitigated risks.
 
 [Using Optional Business and DevOps Fields](link_to_next_branch)

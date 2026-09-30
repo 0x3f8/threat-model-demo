@@ -1,6 +1,10 @@
-= Impact Analysis Of 10 Initial Risks In 9 Categories
+= Impact Analysis Of 11 Initial Risks In 10 Categories
 :fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
-The most prevalent impacts of the *10 initial risks* (distributed over *9 risk categories*) are (taking the severity ratings into account and using the highest for each category)!{fn-risk-findings}
+The most prevalent impacts of the *11 initial risks* (distributed over *10 risk categories*) are (taking the severity ratings into account and using the highest for each category)!{fn-risk-findings}
+
+<<unbounded-search-query-cost,[.HighRisk]#High: *Unbounded Search Query Cost*: 1 Initial Risk - Exploitation likelihood is _Likely_ with _High_ impact.#>>::
+Attackers could exhaust application and database resources, causing slow responses or an outage for legitimate users.
+
 
 <<missing-authentication,[.ElevatedRisk]#Elevated: *Missing Authentication*: 1 Initial Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::
 If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.

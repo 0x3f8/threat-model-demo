@@ -5,6 +5,6 @@ For each technical asset the *"Relative Attacker Attractiveness"* (RAA) value wa
 
 The following lists all technical assets sorted by their RAA value from highest (most attacker attractive) to lowest. This list can be used to prioritize on efforts relevant for the most attacker-attractive technical assets:{fn-risk-findings}
 
-<<python-http-service,*Python HTTP Service*: RAA 100%>>::
+<<python-http-service,[HighRisk]#*Python HTTP Service*: RAA 100%#>>::
   The python HTTP server that implements the /helloWorld endpoint
 

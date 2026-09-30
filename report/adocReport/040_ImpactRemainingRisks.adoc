@@ -1,6 +1,10 @@
-= Impact Analysis Of 8 Remaining Risks In 7 Categories
+= Impact Analysis Of 9 Remaining Risks In 8 Categories
 :fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
-The most prevalent impacts of the *8 remaining risks* (distributed over *7 risk categories*) are (taking the severity ratings into account and using the highest for each category)!{fn-risk-findings}
+The most prevalent impacts of the *9 remaining risks* (distributed over *8 risk categories*) are (taking the severity ratings into account and using the highest for each category)!{fn-risk-findings}
+
+<<unbounded-search-query-cost,[.HighRisk]#High: *Unbounded Search Query Cost*: 1 Remaining Risk - Exploitation likelihood is _Likely_ with _High_ impact.#>>::
+Attackers could exhaust application and database resources, causing slow responses or an outage for legitimate users.
+
 
 <<missing-authentication,[.ElevatedRisk]#Elevated: *Missing Authentication*: 1 Remaining Risk - Exploitation likelihood is _Likely_ with _Medium_ impact.#>>::
 If this risk is unmitigated, attackers might be able to access or modify sensitive data in an unauthenticated way.

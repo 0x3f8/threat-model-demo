@@ -150,6 +150,25 @@
               }
             },
             {
+              "id": "unbounded-search-query-cost",
+              "name": "Unbounded Search Query Cost",
+              "shortDescription": {
+                "text": "Public API requests can trigger expensive search operations without limits on query complexity, pagination depth, or request rate.\n"
+              },
+              "fullDescription": {
+                "text": "Attackers could exhaust application and database resources, causing slow responses or an outage for legitimate users.\n\n\nMitigation: Enforce maximum result sizes and query complexity, apply rate limiting, and monitor for abnormal request patterns.\n"
+              },
+              "help": {
+                "text": "How to fix: Add server-side query limits, pagination limits, timeouts, and rate limits before exposing the search endpoint to public clients.\n\n\nMitigation: Enforce maximum result sizes and query complexity, apply rate limiting, and monitor for abnormal request patterns.\n\n\nCheck: Test large pagination values, repeated requests, and expensive search combinations while monitoring resource use."
+              },
+              "properties": {
+                "cwe": "CWE-400",
+                "function": "architecture",
+                "security-severity": "8.0",
+                "stride": "denial-of-service"
+              }
+            },
+            {
               "id": "unencrypted-communication",
               "name": "Unencrypted Communication",
               "shortDescription": {
@@ -409,8 +428,37 @@
           }
         },
         {
-          "ruleId": "unencrypted-communication",
+          "ruleId": "unbounded-search-query-cost",
           "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "Unbounded Search Query Cost at Python HTTP Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/app/work/sample-model.yaml"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "threagileSyntheticId": "unbounded-search-query-cost@python-http-service@public-internet"
+          },
+          "properties": {
+            "confidence": 0,
+            "dataBreachProbability": "improbable",
+            "exploitationImpact": "high",
+            "exploitationLikelihood": "likely",
+            "mostRelevantAsset": "python-http-service",
+            "severity": "high",
+            "status": "unchecked"
+          }
+        },
+        {
+          "ruleId": "unencrypted-communication",
+          "ruleIndex": 8,
           "level": "warning",
           "message": {
             "text": "Unencrypted Communication named Public Greeting API Request between Public Clients and Python HTTP Service"
@@ -439,7 +487,7 @@
         },
         {
           "ruleId": "unencrypted-communication",
-          "ruleIndex": 7,
+          "ruleIndex": 8,
           "level": "warning",
           "message": {
             "text": "Unencrypted Communication named Public Greeting API Response between Python HTTP Service and Public Clients"
@@ -468,7 +516,7 @@
         },
         {
           "ruleId": "untrusted-deserialization",
-          "ruleIndex": 8,
+          "ruleIndex": 9,
           "level": "warning",
           "message": {
             "text": "Untrusted Deserialization risk at Python HTTP Service"

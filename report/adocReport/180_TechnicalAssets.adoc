@@ -1,20 +1,32 @@
 = Identified Risks by Technical Asset
-In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+In total *11 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *1 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
 
 These risks are distributed across *1 in-scope technical assets*. 
 The following sub-chapters of this section describe each identified risk grouped by technical asset. 
 The RAA value of a technical asset is the calculated "Relative Attacker Attractiveness" value in percent.
 [[python-http-service]]
-== [.ElevatedRisk]#Python HTTP Service: 7/9 unmitigated Risks#
+== [.HighRisk]#Python HTTP Service: 8/10 unmitigated Risks#
 === Description
 The python HTTP server that implements the /helloWorld endpoint
 
 === Identified Risks of Asset
 :fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
 
-==== [.ElevatedRisk]#Elevated Risk Severity#
+==== [.HighRisk]#High Risk Severity#
 
-[.ElevatedRisk]#*Missing Hardening* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+[.HighRisk]#Unbounded Search Query Cost at Python HTTP Service: Exploitation likelihood is _Likely_ with _High_ impact.#
+
+<<unbounded-search-query-cost,[SmallGrey]#unbounded-search-query-cost@python-http-service@public-internet#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
+
+
+==== [.HighRisk]#Elevated Risk Severity#
+
+[.HighRisk]#*Missing Hardening* risk at *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
 <<missing-hardening,[SmallGrey]#missing-hardening@python-http-service#>>
 
@@ -24,9 +36,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Elevated Risk Severity#
+==== [.HighRisk]#Elevated Risk Severity#
 
-[.ElevatedRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+[.HighRisk]#*Server-Side Request Forgery (SSRF)* risk at *Python HTTP Service* server-side web-requesting the target *Public Clients* via *Public Greeting API Response*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
 <<server-side-request-forgery,[SmallGrey]#server-side-request-forgery@python-http-service@public-clients@python-http-service>public-greeting-api-response#>>
 
@@ -36,9 +48,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Elevated Risk Severity#
+==== [.HighRisk]#Elevated Risk Severity#
 
-[.ElevatedRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+[.HighRisk]#*Unencrypted Communication* named *Public Greeting API Response* between *Python HTTP Service* and *Public Clients*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
 <<unencrypted-communication,[SmallGrey]#unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@public-clients#>>
 
@@ -48,9 +60,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Elevated Risk Severity#
+==== [.HighRisk]#Elevated Risk Severity#
 
-[.ElevatedRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
+[.HighRisk]#*Missing Authentication* covering communication link *Public Greeting API Request* from *Public Clients* to *Python HTTP Service*: Exploitation likelihood is _Likely_ with _Medium_ impact.#
 
 <<missing-authentication,[SmallGrey]#missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 
@@ -84,9 +96,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Medium Risk Severity#
+==== [.HighRisk]#Medium Risk Severity#
 
-[.ElevatedRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+[.HighRisk]#*Missing Build Infrastructure* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
 <<missing-build-infrastructure,[SmallGrey]#missing-build-infrastructure@python-http-service#>>
 
@@ -96,9 +108,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Medium Risk Severity#
+==== [.HighRisk]#Medium Risk Severity#
 
-[.ElevatedRisk]#*Missing Vault (Secret Storage)* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+[.HighRisk]#*Missing Vault (Secret Storage)* in the threat model (referencing asset *Python HTTP Service* as an example): Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
 <<missing-vault,[SmallGrey]#missing-vault@python-http-service#>>
 
@@ -108,9 +120,9 @@ The python HTTP server that implements the /helloWorld endpoint
 |===
 
 
-==== [.ElevatedRisk]#Medium Risk Severity#
+==== [.HighRisk]#Medium Risk Severity#
 
-[.ElevatedRisk]#*Missing Web Application Firewall (WAF)* risk at *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
+[.HighRisk]#*Missing Web Application Firewall (WAF)* risk at *Python HTTP Service*: Exploitation likelihood is _Unlikely_ with _Medium_ impact.#
 
 <<missing-waf,[SmallGrey]#missing-waf@python-http-service#>>
 

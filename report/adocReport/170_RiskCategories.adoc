@@ -1,8 +1,61 @@
 = Identified Risks by Vulnerability category
-In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+In total *11 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *1 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
 
-These risks are distributed across *9 vulnerability categories*. 
+These risks are distributed across *10 vulnerability categories*. 
 The following sub-chapters of this section describe each identified risk category.
+
+[[unbounded-search-query-cost]]
+== [.HighRisk]#Unbounded Search Query Cost: 1/1 unmitigated Risk#
+
+*Description* (Denial of Service): https://cwe.mitre.org/data/definitions/400.html[CWE 400]::
+Public API requests can trigger expensive search operations without limits on query complexity, pagination depth, or request rate.
+
+
+*Impact*::
+Attackers could exhaust application and database resources, causing slow responses or an outage for legitimate users.
+
+
+*Detection Logic*::
+Identified during architecture review; not detected by a built-in rule because query cost is not modeled as a standard asset property.
+
+
+*Risk Rating*::
+The public search endpoint can be repeatedly invoked by unauthenticated clients and may execute costly queries against the backend datastore.
+
+
+[RiskStatusFalsePositive]#*False Positives*#::
+[RiskStatusFalsePositive]#Not applicable if the endpoint enforces server-side request budgets.
+#
+
+[RiskStatusMitigated]#*Mitigation*# (Architecture): Add server-side query limits, pagination limits, timeouts, and rate limits before exposing the search endpoint to public clients.
+::
+Enforce maximum result sizes and query complexity, apply rate limiting, and monitor for abnormal request patterns.
+
+
+
+* [RiskStatusMitigated]#ASVS Chapter#: n/a
+* [RiskStatusMitigated]#Cheat Sheet#: n/a
+
+
+*Check*
+
+Test large pagination values, repeated requests, and expensive search combinations while monitoring resource use.
+
+
+=== Risk Findings
+:fn-risk-findings: footnote:riskfinding[Risk finding paragraphs are clickable and link to the corresponding chapter.]
+
+The risk *Unbounded Search Query Cost* was found *1 time* in the analyzed architecture to be potentially possible. Each spot should be checked individually by reviewing the implementation whether all controls have been applied properly in order to mitigate each risk.{fn-risk-findings}
+
+==== [.HighRisk]#_High Risk Severity_#
+[.HighRisk]#Unbounded Search Query Cost at Python HTTP Service: Exploitation likelihood is _Likely_ with _High_ impact.#
+
+<<public-internet,[SmallGrey]#unbounded-search-query-cost@python-http-service@public-internet#>>
+
+[cols="a,c,c,2c",frame=none,grid=none,options="unbreakable"]
+|===
+4+| [.RiskStatusUnchecked.small]#*Unchecked*#
+|===
 
 [[missing-authentication]]
 == [.ElevatedRisk]#Missing Authentication: 1/1 unmitigated Risk#

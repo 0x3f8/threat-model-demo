@@ -1,12 +1,12 @@
 = Identified Data Breach Probabilities by Data Asset
-In total *10 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *0 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
+In total *11 potential risks* have been identified during the threat modeling process of which *0 are rated as critical*, *1 as high*, *6 as elevated*, *4 as medium*, and *0 as low*. 
 
 These risks are distributed across *2 data assets*. 
 The following sub-chapters of this section describe the derived data breach probabilities grouped by data asset.
 
 <<<
 [[dataAsset:json-request]]
-== [.MediumRisk]#JSON Request: 6/8 unmitigated Risks#
+== [.MediumRisk]#JSON Request: 7/9 unmitigated Risks#
 Payload for the request/response exchange
 
 
@@ -23,19 +23,20 @@ Payload for the request/response exchange
 | Stored by:         3+| [GrayText]#none#
 | Sent via:            | Public Greeting API Request| Received via:        | Public Greeting API Response
 | Data Breach:       3+| [.MediumRisk]#possible#
-| Data Breach Risks: 3+| This data asset has data breach potential because of 6 remaining risks:
+| Data Breach Risks: 3+| This data asset has data breach potential because of 7 remaining risks:
 |                    2+| <<server-side-request-forgery,[.MediumRisk.small]#Possible: server-side-request-forgery@python-http-service@public-clients@python-http-service>public-greeting-api-response#>>
 |                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 |                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@public-clients#>>
 |                    2+| <<missing-authentication,[.MediumRisk.small]#Possible: missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 |                    2+| <<missing-hardening,[.LowRisk.small]#Improbable: missing-hardening@python-http-service#>>
 |                    2+| <<missing-waf,[.LowRisk.small]#Improbable: missing-waf@python-http-service#>>
+|                    2+| <<unbounded-search-query-cost,[.LowRisk.small]#Improbable: unbounded-search-query-cost@python-http-service@public-internet#>>
 
 |===
 
 <<<
 [[dataAsset:json-response]]
-== [.MediumRisk]#JSON Response: 6/8 unmitigated Risks#
+== [.MediumRisk]#JSON Response: 7/9 unmitigated Risks#
 Payload for the request/response exchange
 
 
@@ -53,13 +54,14 @@ Payload for the request/response exchange
 | Stored by:         3+| [GrayText]#none#
 | Sent via:            | Public Greeting API Response| Received via:        | Public Greeting API Request
 | Data Breach:       3+| [.MediumRisk]#possible#
-| Data Breach Risks: 3+| This data asset has data breach potential because of 6 remaining risks:
+| Data Breach Risks: 3+| This data asset has data breach potential because of 7 remaining risks:
 |                    2+| <<server-side-request-forgery,[.MediumRisk.small]#Possible: server-side-request-forgery@python-http-service@public-clients@python-http-service>public-greeting-api-response#>>
 |                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 |                    2+| <<unencrypted-communication,[.MediumRisk.small]#Possible: unencrypted-communication@python-http-service>public-greeting-api-response@python-http-service@public-clients#>>
 |                    2+| <<missing-authentication,[.MediumRisk.small]#Possible: missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service#>>
 |                    2+| <<missing-hardening,[.LowRisk.small]#Improbable: missing-hardening@python-http-service#>>
 |                    2+| <<missing-waf,[.LowRisk.small]#Improbable: missing-waf@python-http-service#>>
+|                    2+| <<unbounded-search-query-cost,[.LowRisk.small]#Improbable: unbounded-search-query-cost@python-http-service@public-internet#>>
 
 |===
 
