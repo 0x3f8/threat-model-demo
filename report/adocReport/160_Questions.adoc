@@ -1,7 +1,20 @@
-= Questions: 0 / 0 Question
+= [ModelFailure]#Questions: 4 / 5 Questions#
 
 This chapter lists custom questions that arose during the threat modeling process.
 
 
-[GreyText]#No custom questions arose during the threat modeling process.#
+*[ModelFailure]#Are request bodies, client IP addresses, headers, errors, or response data written to logs, and how long are those logs retained?#*::
+[GreyText]#_- answer pending -_#
+
+*What business capability requires this endpoint to be anonymously accessible from the public internet?*::
+_The business has stated that this is just a demo API for training, see ticket INC000123_
+
+*[ModelFailure]#What characters, length, encoding, and schema are allowed for the name value in the JSON request?#*::
+[GreyText]#_- answer pending -_#
+
+*[ModelFailure]#What normal and peak request volume should the API support, and what behavior is expected when that limit is exceeded?#*::
+[GreyText]#_- answer pending -_#
+
+*[ModelFailure]#Which team owns vulnerability remediation, availability monitoring, incident response, and risk acceptance for this public endpoint?#*::
+[GreyText]#_- answer pending -_#
 

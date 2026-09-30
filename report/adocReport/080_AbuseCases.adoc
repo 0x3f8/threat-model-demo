@@ -2,6 +2,21 @@
 This chapter lists the custom abuse cases which have been defined for the modeled target.
 
 
+api-resource-exhaustion::
+  An attacker sends a high volume of requests, oversized JSON bodies, or intentionally slow requests to consume CPU, memory, worker capacity, network bandwidth, or log storage.
+
+
+endpoint-reconnaissance::
+  An attacker sends malformed methods, headers, content types, encodings, and JSON payloads to identify framework versions, stack traces, error behavior, supported methods, or adjacent exposed services.
+
+
+log-injection-or-sensitive-data-submission::
+  An attacker submits control characters, markup, log-like strings, or personal data in the name field so that it is reflected in responses, stored in logs, or displayed in operational tools.
+
+
+reflected-content-abuse::
+  An attacker supplies a crafted name value and shares the resulting response with another user or system, attempting to exploit unsafe rendering if the response is later embedded in a browser, dashboard, terminal, or log viewer.
+
 
 
 

@@ -1,122 +1,222 @@
-# Threat Model Demo Part 2 - Checking and Mitigating Risks
+# Threat Model Demo Part 3 - Asking Better Questions and Modeling Abuse Cases
 
-Now that we've created a threat model and generated a report we'll want to
-* review the risks
-* update the model
-* regenerate the report with each update to reflect updates
+In the first two parts of this demo, we:
 
-## Reviewing Risks
-There are a number of ways to review your risk outputs, but the most programmatically oriented way may be to review the [JSON Risk Regstry](./report/risks.json).  For a more visual friendly format, there is also an [Excel Spreadsheet](./report/risks.xlsx).
+* built a basic threat model for a public Hello World API
+* generated a report and reviewed the risks it identified
+* accepted or mitigated risks using the `risk_tracking:` block
 
-Let's examine one of the easiest risks to mitigate for this threat model - Missing Authentication
+At this point, the model contains more than enough information to start a useful conversations. In a real threat modeling exercise, the team or engineer creating the threat model should already thinking about, and including, these questions in the first or second iteration of the threat model.
 
-``` jq '.[] | select(.category == "missing-authentication")' risks.json```
+Why? Because threat modeling is not only about generating a list of findings. It is also a structured way to identify assumptions, document unanswered questions, and ask how a feature could be deliberately misused.
 
-    {
-        "category": "missing-authentication",
-        "severity": "elevated",
-        "exploitation_likelihood": "likely",
-        "exploitation_impact": "medium",
-        "title": "<b>Missing Authentication</b> covering communication link <b>Public Greeting API Request</b> from <b>Public Clients</b> to <b>Python HTTP Service</b>",
-        "synthetic_id": "missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service",
-        "most_relevant_technical_asset": "python-http-service",
-        "most_relevant_communication_link": "public-clients>public-greeting-api-request",
-        "data_breach_probability": "possible",
-        "data_breach_technical_assets": [
-        "python-http-service"
-        ]
-    }
+This lesson introduces two optional Threagile fields:
 
-You'll want to take note of the ```synthetic_id``` for this risk.  This is a unique id generated for each risk and should be specific to each asset.   You wouldn't want a blanket "Missing Authentication" risk because your endpoints could be a mix of those to should and shouldn't use authentication.  There is a way to wildcard a mitigation to several risks at once, but I wouldn't recommend it.
+* `questions:`
+* `abuse_cases:`
 
-## Risk Acceptance and Mitigation
+Neither field automatically fixes a risk or changes a risk score. Their value is in making uncertainty, business intent, attacker behavior, and ownership visible while the design is still easy to change.
 
-If you recall the requirements you'll remember that authentication wasn't listed.  The business intent was to simply have a Hello World type API.  To update our threat model we're going to open our model and add a new section.
+## The API We Are Modeling
 
-All of our updates will go into the ```risk_tracking:``` block of the yaml.  Because it was an optional element, and because we need the unique ```synthetic_id``` of the risk to even action those items, we couldn't have even included this in the initial model.
+Our application is still intentionally simple:
 
-We'll title each element by it's synthetic id. 
+* A public client sends a JSON request to `/helloWorld`.
+* The request contains a `name`.
+* The Python HTTP service returns a greeting response.
+* The endpoint is available over HTTP.
+* The endpoint has no authentication or authorization.
+* The endpoint processes input received from anonymous public clients.
 
-    risk_tracking:
-        missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service:
-            description: The public clients can access the API without any authentication, which is a risk.
-            status: accepted
-            justification: >
-            This is a public API that is meant to be accessed by anyone, so we accept the risk of missing authentication.
-            ticket: N/A
-            date: 2026-01-02
-            checked_by: Alice
+The simple design is useful because it makes assumptions easy to spot. “Hello World” is often treated as harmless, but an internet-facing endpoint is still an exposed service with code, infrastructure, operational cost, and an attack surface.
 
-If we now regenerate our [report](./report/02-accpeted_risk_report.pdf), we'll notice a number of changes.
+The business may genuinely want anonymous access. That is a valid design decision. The question is whether the team understands what anonymous access permits, what it costs to operate, and what controls are appropriate for the intended use.
 
-First you'll notice the summary which now shows one risk has been accepted.
+## Optional Fields Are Conversation Starters
 
-![Management Summary Pie Chart](./images/01-AcceptedPieChart.png)
+A generated risk typically describes a known security condition. For example, Threagile can identify missing authentication because the communication link explicitly has `authentication: none`.
 
-The next update is to the Risk Mitigation details which, honestly, just presents the risks with a couple of more specific charts and graphs.
+Questions and abuse cases solve a different problem:
 
-![Risk Mitigation charts](./images/01-TrackingStatus.png)
+* A **question** captures an important unknown that must be answered by a person or team.
+* An **abuse case** describes an attacker or malicious user’s goal, method, and likely outcome.
 
-Rather than nitpick every single change in the report for this change, let's look at the most signficant changes.  Under the Risk Findings for Missing Authentication, and under the Python HTTP Service, we will now have these updated findings.
+These fields help prevent the model from looking more certain than the team actually is. If the model says the API handles only public data, but nobody has confirmed logging behavior, error handling, deployment details, or expected traffic volume, those are assumptions worth recording.
 
-First, within the defined risk, is the updated finding
+## Questions: Make Unknowns Visible
 
-![Risk Finding Updated Description](./images/01-MissingAuth-Finding.png)
+Questions should be specific enough that someone can answer them and should identify who is expected to provide that answer.
 
-Next, we'll see a similar update in the Python HTTP Service
+A poor question is:
 
-![Accepted Risk for Python HTTP Service](./images/01-AcceptedHTTPServiceAuth.png)
+```yaml
+questions:
+  Is the API secure?: ""
+```
 
-**NOTE:**  While this covers what you would expect to see, there is one detail you might be wondering about.
+This is too broad to answer and does not produce an actionable decision.
 
-In the Risk Mitigation section early in the report, it details the status of the risks and that we've accept 1 of these risks.   However, in the following section for Impact Analysis, 10 of 10 risks are still listed as remaining.
+A more useful question isolates a design decision:
 
-![Impact Analysis with 10 risks](./images/01-ImpactAnalysis.png)
+```yaml
+questions:
+  What business capability requires this endpoint to be anonymously accessible from the public internet?: ""
+```
 
-Why?  This is because we've accepted the risk instead of mitigating the risk or otherwise negating it in some other way.  Should we make a change to this endpoint and the business intent is that authentication is required, we have no mitigation and the risk still remains.  To prove that with a different risk, lets actually mitigate the Second Factor Authentication risk.  If authentication isn't required, or even possible in this case, then this risk is mitigated.
+This question does not assume authentication is required. Instead, it asks the business to verify why anonymous access is necessary.
 
-    missing-authentication-second-factor@public-clients>public-greeting-api-request@public-clients@python-http-service:
-        description: All methods of authentication should require MFA
-        status: mitigated
-        justification: >
-        We don't allow authentication at all, so MFA is pointless.
-        ticket: N/A
-        date: 2026-01-02
-        checked_by: Alice
+Add questions to `sample-model.yaml` after the `risk_tracking:` block:
 
-With the new mitigation added to the model we can re-run the [report](./report/03-mitigated_risk_report.pdf) and confirm that, instead of 10 remaining risks, we now only have 9.
+```yaml
+questions: # simply use "" as answer to signal "unanswered"
+  What business capability requires this endpoint to be anonymously accessible from the public internet?:  "The business has stated that this is just a demo API for training, see ticket INC000123"
+  What normal and peak request volume should the API support, and what behavior is expected when that limit is exceeded?: ""
+  What characters, length, encoding, and schema are allowed for the name value in the JSON request?: ""
+  Are request bodies, client IP addresses, headers, errors, or response data written to logs, and how long are those logs retained?: ""
+```
 
-![Impact Ananlysis with 9 risks](./images/02-RiskMitigatedProven.png)
+The important part is not the exact wording. The important part is that each question should be assigned, answered, and eventually reflected back into the threat model.
 
-Lastly, lets mitigate a risk that should have a significant impact within the report.   One of the highest rated risks is listed as Untrusted Deserialization.  Within the Python HTTP Service we define the following
+For example, if the business answers that the endpoint is only intended for an internal developer portal, then the model should change. The service may no longer belong on the public internet, and anonymous access may no longer be an acceptable risk.
 
-    data_formats_accepted: # sequence of formats like: json, xml, serialization, file, csv
-      - json
-      - serialization
+## Questions by Stakeholder
 
-I wanted to show the risks of untrusted input in the initial threat model and have a way to show how it impacts a report.  So, I put serialization as an accepted format.  This is because, at least with Python, there are several ways to consume this API request.
+Different people have different information. Threat modeling works best when questions go to the people who can actually answer them. 
 
-The safer way would be with ```import json``` with ```json.loads``` to read the request.  However, there is a very unsafe way with ```jsonpickle``` and ```jsonpickle.decode``` which will deserialize a json object and potentially allow remote code execution.
+| Stakeholder | Questions they should answer |
+|---|---|
+| Business or Product Owner | Who is the intended consumer? Is public anonymous access a requirement? What happens if the service is unavailable or abused? |
+| Development Team | What input is allowed? How is JSON parsed? Are errors safely handled? Can response data reflect attacker-controlled input? |
+| Operations or Platform Team | Where is the API hosted? Is TLS terminated upstream? Are logs collected? What rate limiting, WAF, DDoS, and monitoring controls exist? |
+| Security Team | What public exposure is acceptable? What evidence is required to accept residual risk? What controls are mandatory for internet-facing APIs? |
+| Legal, Privacy, or Compliance | Could users submit personal data despite the stated policy? Are IP addresses or request logs subject to retention or privacy requirements? |
 
-The more obvious way to fix this risk is to use the safer method and remove serialization as an accepted format. However, to show how mitigating this affects the report, lets deal with the latent risk instead.
+A useful exercise is to choose one question and decide what model field should change after the team answers it. A threat model should evolve because an answer represents new information, not because the team wants the report to look better. 
 
-    untrusted-deserialization@python-http-service:
-        description: The API endpoint could deserialize the JSON payload sent by the public clients, which is untrusted input.
-        status: mitigated
-        justification: >
-        The API endpoint will use a safe deserialization library that prevents code execution and other attacks.
-        ticket: N/A
-        date: 2026-01-02
-        checked_by: Alice
+## Abuse Cases: Think Like an attacker
 
-Now if we run our [report](./report/04-significant_risk_mitigated_report.pdf) again and look at the Data Mapping Chart we'll see that our report has changed in a positive way.
+An abuse case is not simply a vulnerability description. It starts with what an attacker, scraper, abusive customer, competitor, or curious researcher wants to accomplish.
 
-![Data Mapping Risk decreased](./images/DataMappingMitigated.png)
+For this API, an attacker may not care about receiving a greeting. They may want to:
 
-Previously, the objects were red, indicating more risk.
+* consume infrastructure resources
+* test whether the endpoint can be used as a reflection mechanism
+* submit payloads that appear in logs, dashboards, or downstream systems
+* discover behavior differences through error messages
+* use the endpoint as an early target while searching for other services on the same host or network
+* create operational noise that hides a more serious event
 
-![Data Mapping Risk unmitigated](./images/DataMapping.png)
+The following abuse cases are appropriate for the hypothetical public greeting API:
 
-Hopefully this demonstrates the usefulness of threat modeling with valid examples of risks, accepted risks, and mitigated risks.
+```yaml
+abuse_cases:
 
-[Using Optional Business and DevOps Fields](link_to_next_branch)
+  Anonymous API Resource Exhaustion: >
+    An attacker sends a high volume of requests, oversized JSON bodies, or
+    intentionally slow requests to the public /helloWorld endpoint. Their goal
+    is to consume CPU, memory, network capacity, log storage, or other shared
+    infrastructure resources. The business impact is degraded availability,
+    increased operating cost, and possible disruption of other workloads
+    running on the same infrastructure.
+
+  Hostile Input Through the Name Field: >
+    An attacker submits unusually long values, control characters, markup,
+    escape sequences, misleading log-like values, or sensitive data in the
+    name value. Their goal is to cause unsafe behavior in request handling,
+    reflected output, log viewers, dashboards, or downstream systems. The
+    business impact could include misleading operational records, accidental
+    sensitive-data retention, or an injection path if another consumer renders
+    the returned greeting unsafely.
+
+  Public Endpoint Reconnaissance: >
+    An attacker submits malformed JSON, unexpected HTTP methods, unsupported
+    content types, unusual encodings, and invalid headers to learn how the
+    Python HTTP service behaves. Their goal is to identify implementation
+    details, error-handling differences, stack traces, supported capabilities,
+    or adjacent exposed services. This information can reduce the effort needed
+    to find and exploit a separate weakness.
+
+  Reflected Content Abuse: >
+    An attacker supplies crafted input to the name field and distributes the
+    resulting response to another user or system. Their goal is to turn the
+    greeting response into a delivery mechanism when a browser, terminal,
+    dashboard, log viewer, or another client renders the attacker-controlled
+    content without appropriate output encoding.
+
+  Unexpected Sensitive-Data Submission: >
+    A user submits personal, confidential, credential, or other sensitive data
+    in the name field despite the application requirement that PHI and PII are
+    not allowed. The risk is not that the API is designed to process sensitive
+    data, but that untrusted users can ignore intended use and cause sensitive
+    content to appear in logs, error records, monitoring systems, or support
+    workflows.
+
+  Abuse of an Accepted Anonymous-Access Decision: >
+    An attacker takes advantage of the accepted decision that the endpoint has
+    no authentication. Their goal is not necessarily to access protected data,
+    but to use unrestricted access for automated probing, resource consumption,
+    behavior discovery, or as a stable public service in a broader attack
+    workflow. The team should periodically confirm that the public,
+    unauthenticated design remains a valid business requirement.
+```
+
+## Turning an Abuse Case Into a Test
+
+An abuse case should influence engineering work. It is not complete just because it appears in YAML.
+
+Take the `Anonymous API Resource Exhaustion` abuse case. A practical team response might be:
+
+1. Define a maximum accepted request-body size.
+2. Define a maximum length for `name`.
+3. Reject invalid JSON and unsupported content types.
+4. Add a rate limit at the edge or reverse proxy.
+5. Add automated tests for oversized and malformed requests.
+6. Add monitoring for abnormal request volume and high error rates.
+7. Re-run the threat model after the architecture or controls change.
+
+This is the connection between threat modeling and DevSecOps: an abuse case becomes a security requirement, then a backlog item, then an implementation and test, then evidence for a mitigation decision.
+
+## Do Not Confuse a Question With a Mitigation
+
+Adding a question does not reduce risk.
+
+Adding an abuse case does not reduce risk.
+
+Adding a control that is not implemented does not reduce risk.
+
+A risk should only be marked as mitigated when the team can explain what control exists, where it is enforced, how it is tested, who owns it, and how it will remain effective as the application changes.
+
+For example, saying “the API will be rate limited” is an intention. A stronger mitigation statement identifies the enforcement point and evidence:
+
+```yaml
+description: >
+  Anonymous public clients could exhaust API resources through high request
+  volume or oversized requests.
+status: mitigated
+justification: >
+  The edge proxy enforces a 100 requests-per-minute limit per source address,
+  rejects request bodies larger than 4 KB, and exports rate-limit events to
+  centralized monitoring. Automated integration tests verify both controls.
+ticket: API-123
+date: 2026-01-03
+checked_by: Alice
+```
+
+The mitigation becomes more credible because it is specific, testable, and owned.
+
+## Suggested Exercise
+
+Before continuing, review the model as if the greeting API will be deployed next week.
+
+Choose one of the questions above and write an answer from the perspective of the stakeholder who owns it. Then identify one field in `sample-model.yaml` that should change because of that answer.
+
+For example:
+
+* If the endpoint must be public, what evidence supports accepting anonymous access?
+* If the endpoint is only for internal developers, what trust boundary and communication-link changes are necessary?
+* If the API logs request values, what data classification and retention changes are necessary?
+* If the API must tolerate high public traffic, where should rate limiting be enforced?
+
+In the next part, we can use these answers and abuse cases to define security requirements, add technical controls, and show how model changes affect the generated report.
+
+[Moving to Continuous Threat Modeling](link_to_next_branch)
