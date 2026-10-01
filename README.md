@@ -45,6 +45,7 @@ Draft requirements might be:
 * require no authentication
 * do no input validation
 * take the json object with a name and returns json hello response object
+
 ```mermaid:
     flowchart LR
     Consumers[Consumers] -->|HTTP request| API[Public Greeting API]
@@ -94,7 +95,7 @@ Before we examine the report artifacts, lets look at how the YAML is composed an
 ## Business Information
 Every report starts with the threagile version as well as relevant business information. This block is pretty self-explanatory and covers a number of business related items such as the app/report name, report author, management summary, etc.
 
-    ```yaml
+```yaml
     threagile_version: 1.0.0
     title: Greeting Application
 
@@ -118,7 +119,8 @@ Every report starts with the threagile version as well as relevant business info
         It is implemented in Python using the built-in HTTPServer class.
 
     security_requirements:
-    PHI/PII: Usage of PHI/PII is not allowed in this application.  The application should not be used to process any sensitive data.```
+    PHI/PII: Usage of PHI/PII is not allowed in this application.  The application should not be used to process any sensitive data.
+```
 
 When using the schema validation, you can hover over most fields to see a list of valid options, such as for business criticality.
 
@@ -133,19 +135,19 @@ Other free form fields are up to the business to determine what needs to be ther
 The next section deals with tag definitions
 
 ```yaml
-    tags_available:
-        - python
-        - httpserver
-        - apiendpoint
-        - jsonpayload
-        - basicauth
-        - webserver
-        - linux
-        - ubuntu
-        - internal
-        - edge
-        - remoteaccess
-        - ssh
+  tags_available:
+      - python
+      - httpserver
+      - apiendpoint
+      - jsonpayload
+      - basicauth
+      - webserver
+      - linux
+      - ubuntu
+      - internal
+      - edge
+      - remoteaccess
+      - ssh
 ```
 
 This section is used to define tags that may appear later in the threat model.  If they are not defined in this section an error may be generated when you attempt to generate the threat model.
@@ -160,33 +162,33 @@ For instance, technology assets only have three types - process, data-store, and
 The next several sections are the core of the threat model. Each asset type - data, technical, trust boundaries, and shared runtimes define the shape of your application and directly affect the generated output. Each of these asset blocks begins with the asset type and if hinting is working correctly, you can generate an asset stub.
 
 ```yaml
-    data_assets:
-    technical_assets:
-    trust_boundaries:
-    shared_runtimes:
+  data_assets:
+  technical_assets:
+  trust_boundaries:
+  shared_runtimes:
 ```
 
 ### Data assets
 Data assets define just that - data that is either in transit or at rest.  This asset type is one of the smaller elements and easy to comprehend.  
 
 ```yaml
-    data_assets:
+  data_assets:
 
-        JSON Payload:
-            id: json-request-response
-            description: Payload for the request/response exchange
-            type: data 
-            usage: business
-            tags: 
-            - jsonpayload
-            origin: Untrusted Clients
-            owner: Alice's Development Team
-            quantity: very-few
-            confidentiality: public
-            integrity: critical 
-            availability: operational
-            justification_cia_rating: >
-              We're just doing hello world, so no need for any special CIA ratings here. Right?
+    JSON Payload:
+      id: json-request-response
+      description: Payload for the request/response exchange
+      type: data 
+      usage: business
+      tags: 
+        - jsonpayload
+      origin: Untrusted Clients
+      owner: Alice's Development Team
+      quantity: very-few
+      confidentiality: public
+      integrity: critical 
+      availability: operational
+      justification_cia_rating: >
+        We're just doing hello world, so no need for any special CIA ratings here. Right?
 ```
 
 Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in stub model that can be generated.  They're mostly self-explanatory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
@@ -197,54 +199,54 @@ One important thing to note about each of the CIA elements.  You should assume a
 Data assets don't just reside in the ether even if they travel across it! Technical assets are where you'll define where data is stored, processed, and transited.  They can be servers, network devices, processes, web browsers, etc.  While there are only three technology types, there are a number of 'technologies' you can choose from, so don't fret too much about the type and focus more on the technology element.
 
 ```yaml
-    Python HTTP Service:
-        id: python-http-service
-        description: The python HTTP server that implements the /helloWorld endpoint
-        type: process
-        usage: business
-        used_as_client_by_human: false
-        out_of_scope: false
-        justification_out_of_scope:
-        size: application
-        technology: web-service-rest
-        tags:
-            - httpserver
-            - python
-            - apiendpoint
-        internet: true
-        machine: virtual
-        encryption: none
-        owner: Alice's Development Team
-        confidentiality: strictly-confidential
-        integrity: critical
-        availability: operational
-        justification_cia_rating: >
-            We said it's just a hello world API, so no need for any special CIA ratings here.
-            At the same time, the service runs on our server and nobody should be able to access the server without authorization
-        multi_tenant: false
-        redundant: false
-        custom_developed_parts: true
-        data_assets_processed:
-            - json-request-response
-        data_assets_stored:
-        data_formats_accepted:
-            - json
-            - serialization
-        communication_links:
-            Public Greeting API Response:
-                target: public-clients
-                description: HTTP response from /helloWorld
-                protocol: http
-                authentication: none
-                authorization: none
-                vpn: false
-                ip_filtered: false
-                readonly: true
-                usage: business
-                data_assets_sent:
-                  - json-response
-                data_assets_received:
-                   - json-request
+  Python HTTP Service:
+      id: python-http-service
+      description: The python HTTP server that implements the /helloWorld endpoint
+      type: process
+      usage: business
+      used_as_client_by_human: false
+      out_of_scope: false
+      justification_out_of_scope:
+      size: application
+      technology: web-service-rest
+      tags:
+        - httpserver
+        - python
+        - apiendpoint
+      internet: true
+      machine: virtual
+      encryption: none
+      owner: Alice's Development Team
+      confidentiality: strictly-confidential
+      integrity: critical
+      availability: operational
+      justification_cia_rating: >
+          We said it's just a hello world API, so no need for any special CIA ratings here.
+          At the same time, the service runs on our server and nobody should be able to access the server without authorization
+      multi_tenant: false
+      redundant: false
+      custom_developed_parts: true
+      data_assets_processed:
+        - json-request-response
+      data_assets_stored:
+      data_formats_accepted:
+        - json
+        - serialization
+      communication_links:
+        Public Greeting API Response:
+          target: public-clients
+          description: HTTP response from /helloWorld
+          protocol: http
+          authentication: none
+          authorization: none
+          vpn: false
+          ip_filtered: false
+          readonly: true
+          usage: business
+          data_assets_sent:
+            - json-response
+          data_assets_received:
+            - json-request
 ```
 
 Much like data assets, you need to define your CIA levels.  However, there are many more elements to be considered.  Does a humen interact directly with it?  Are the redundant systems in place? Is it internet facing?  Is it encrypting the data and if so, how?  Is it "off the shelf" or does it contain custom developed components?  What data elements are processed or stored and what format is that data?  Lastly, is it communicating with any other technical assets?
@@ -253,15 +255,15 @@ Much like data assets, you need to define your CIA levels.  However, there are m
 Trust boundaries are just what they sound like.  This is where you define where technical assets reside.  Are they on the public internet?  Are they on your corporate network behind layered defenses?  How you define your trust boundaries is very important and as your threat model continues to evolve, should better reflect the reality and complexity of your environment.
 
 ```yaml
-    trust_boundaries:
-        Public Internet:
-            id: public-internet
-            description: Untrusted public network from which untrusted consumers access the API.
-            type: network-dedicated-hoster
-            tags: []
-            technical_assets_inside:
-                - public-clients
-            trust_boundaries_nested: []
+  trust_boundaries:
+    Public Internet:
+      id: public-internet
+      description: Untrusted public network from which untrusted consumers access the API.
+      type: network-dedicated-hoster
+      tags: []
+      technical_assets_inside:
+        - public-clients
+      trust_boundaries_nested: []
 ```
 
 ### Shared Runtimes
@@ -270,19 +272,19 @@ While not defined in our base threat model, shared runtimes will play an importa
 A simple version of a shared runtime might look like this
 
 ```yaml
-    shared_runtimes:
-        Kubernetes Server for container hosting:
-            id: kubernetes
-            description: A container orchestration platform
-            tags:
-                - kubernetes
-                - containers
-                - immutable-workloads
-                - cattle-not-pets
-            technical_assets_running:
-                - python-http-service
-                - node-js-service
-                - database-service
+  shared_runtimes:
+    Kubernetes Server for container hosting:
+      id: kubernetes
+      description: A container orchestration platform
+      tags:
+        - kubernetes
+        - containers
+        - immutable-workloads
+        - cattle-not-pets
+      technical_assets_running:
+        - python-http-service
+        - node-js-service
+        - database-service
 ```
 
 As I noted in the syllabus, we're not going to cover many of the optional elements of the threat model schema in this branch. However, with the elements we do have, we can now generate and review risks associated with our simple model.
@@ -404,29 +406,29 @@ So far we've covered the business facing PDF report.  As mentioned in the syllab
 Of the most interest are the risks.* files. These files are the enumerated risks from your model, each entry with a unique identifier that can be used later during the mitigation steps. 
 
 ```json
-    {
-        "category": "missing-authentication",
-        "severity": "elevated",
-        "exploitation_likelihood": "likely",
-        "exploitation_impact": "medium",
-        "title": "<b>Missing Authentication</b> covering communication link <b>Public Greeting API Request</b> from <b>Public Clients</b> to <b>Python HTTP Service</b>",
-        "synthetic_id": "missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service",
-        "most_relevant_technical_asset": "python-http-service",
-        "most_relevant_communication_link": "public-clients>public-greeting-api-request",
-        "data_breach_probability": "possible",
-        "data_breach_technical_assets": [
-            "python-http-service"
-        ]
-    },
+  {
+    "category": "missing-authentication",
+    "severity": "elevated",
+    "exploitation_likelihood": "likely",
+    "exploitation_impact": "medium",
+    "title": "<b>Missing Authentication</b> covering communication link <b>Public Greeting API Request</b> from <b>Public Clients</b> to <b>Python HTTP Service</b>",
+    "synthetic_id": "missing-authentication@public-clients>public-greeting-api-request@public-clients@python-http-service",
+    "most_relevant_technical_asset": "python-http-service",
+    "most_relevant_communication_link": "public-clients>public-greeting-api-request",
+    "data_breach_probability": "possible",
+    "data_breach_technical_assets": [
+        "python-http-service"
+    ]
+  },
 ```
 
  This output comes in a standard json format, a GitLab SAST compatible file, sarif format, and lastly XLSX. If they're not going to be consumed, you can easily skip those outputs with the corresponding switches.
 
 ```bash
-      --skip-risks-excel                   skip generating risks excel
-      --skip-risks-gl-sast                 skip generating risks gitlab sast report
-      --skip-risks-json                    skip generating risks json
-      --skip-risks-sarif                   skip generating risks sarif
+  --skip-risks-excel                   skip generating risks excel
+  --skip-risks-gl-sast                 skip generating risks gitlab sast report
+  --skip-risks-json                    skip generating risks json
+  --skip-risks-sarif                   skip generating risks sarif
 ```
 Other files available are:
 
