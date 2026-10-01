@@ -94,7 +94,7 @@ Before we examine the report artifacts, lets look at how the YAML is composed an
 ## Business Information
 Every report starts with the threagile version as well as relevant business information. This block is pretty self-explanatory and covers a number of business related items such as the app/report name, report author, management summary, etc.
 
-    ```
+    ```yaml
     threagile_version: 1.0.0
     title: Greeting Application
 
@@ -132,6 +132,7 @@ Other free form fields are up to the business to determine what needs to be ther
 
 The next section deals with tag definitions
 
+```yaml
     tags_available:
         - python
         - httpserver
@@ -145,7 +146,7 @@ The next section deals with tag definitions
         - edge
         - remoteaccess
         - ssh
-
+```
 
 This section is used to define tags that may appear later in the threat model.  If they are not defined in this section an error may be generated when you attempt to generate the threat model.
 
@@ -158,15 +159,17 @@ For instance, technology assets only have three types - process, data-store, and
 ## Core elements
 The next several sections are the core of the threat model. Each asset type - data, technical, trust boundaries, and shared runtimes define the shape of your application and directly affect the generated output. Each of these asset blocks begins with the asset type and if hinting is working correctly, you can generate an asset stub.
 
+```yaml
     data_assets:
     technical_assets:
     trust_boundaries:
     shared_runtimes:
-
+```
 
 ### Data assets
 Data assets define just that - data that is either in transit or at rest.  This asset type is one of the smaller elements and easy to comprehend.  
 
+```yaml
     data_assets:
 
         JSON Payload:
@@ -184,6 +187,7 @@ Data assets define just that - data that is either in transit or at rest.  This 
             availability: operational
             justification_cia_rating: >
               We're just doing hello world, so no need for any special CIA ratings here. Right?
+```
 
 Again, each of the fields that requires specific values should either hint or have a tool-tip depending on how your IDE is setup.  If unsure, refer to the schema, code snippets file, other examples, or the built-in stub model that can be generated.  They're mostly self-explanatory and shouldn't require much assistance to complete. Multiple data assets can and should be included under each ```data_assets:``` block. 
 
@@ -192,6 +196,7 @@ One important thing to note about each of the CIA elements.  You should assume a
 ### Technical Assets
 Data assets don't just reside in the ether even if they travel across it! Technical assets are where you'll define where data is stored, processed, and transited.  They can be servers, network devices, processes, web browsers, etc.  While there are only three technology types, there are a number of 'technologies' you can choose from, so don't fret too much about the type and focus more on the technology element.
 
+```yaml
     Python HTTP Service:
         id: python-http-service
         description: The python HTTP server that implements the /helloWorld endpoint
@@ -240,12 +245,14 @@ Data assets don't just reside in the ether even if they travel across it! Techni
                   - json-response
                 data_assets_received:
                    - json-request
+```
 
 Much like data assets, you need to define your CIA levels.  However, there are many more elements to be considered.  Does a humen interact directly with it?  Are the redundant systems in place? Is it internet facing?  Is it encrypting the data and if so, how?  Is it "off the shelf" or does it contain custom developed components?  What data elements are processed or stored and what format is that data?  Lastly, is it communicating with any other technical assets?
 
 ### Trust Boundaries
 Trust boundaries are just what they sound like.  This is where you define where technical assets reside.  Are they on the public internet?  Are they on your corporate network behind layered defenses?  How you define your trust boundaries is very important and as your threat model continues to evolve, should better reflect the reality and complexity of your environment.
 
+```yaml
     trust_boundaries:
         Public Internet:
             id: public-internet
@@ -255,12 +262,14 @@ Trust boundaries are just what they sound like.  This is where you define where 
             technical_assets_inside:
                 - public-clients
             trust_boundaries_nested: []
+```
 
 ### Shared Runtimes
 While not defined in our base threat model, shared runtimes will play an important part in your risk analysis as your threat model evolves.  Much like data needs somewhere to live, one or more of your technical assets is likely hosting one or more other technical assets.  A physical server could be hosting a web application, database, and FTP server which would be defined as a shared runtime.  Other examples would include a Virtual Host running multiple guests or even a container orchestration platform.
 
 A simple version of a shared runtime might look like this
 
+```yaml
     shared_runtimes:
         Kubernetes Server for container hosting:
             id: kubernetes
@@ -274,6 +283,7 @@ A simple version of a shared runtime might look like this
                 - python-http-service
                 - node-js-service
                 - database-service
+```
 
 As I noted in the syllabus, we're not going to cover many of the optional elements of the threat model schema in this branch. However, with the elements we do have, we can now generate and review risks associated with our simple model.
 
@@ -393,6 +403,7 @@ So far we've covered the business facing PDF report.  As mentioned in the syllab
 
 Of the most interest are the risks.* files. These files are the enumerated risks from your model, each entry with a unique identifier that can be used later during the mitigation steps. 
 
+```json
     {
         "category": "missing-authentication",
         "severity": "elevated",
@@ -407,15 +418,16 @@ Of the most interest are the risks.* files. These files are the enumerated risks
             "python-http-service"
         ]
     },
-
+```
 
  This output comes in a standard json format, a GitLab SAST compatible file, sarif format, and lastly XLSX. If they're not going to be consumed, you can easily skip those outputs with the corresponding switches.
 
+```bash
       --skip-risks-excel                   skip generating risks excel
       --skip-risks-gl-sast                 skip generating risks gitlab sast report
       --skip-risks-json                    skip generating risks json
       --skip-risks-sarif                   skip generating risks sarif
-
+```
 Other files available are:
 
 **stats.json**: General statistics by risk category, etc.
@@ -430,8 +442,6 @@ Other files available are:
 
 
 In the next lesson we'll learn how to mitigate risks within the model.
-
-
 
 
 [Next Step - Checking and Mitigating Risks](https://github.com/0x3f8/threat-model-demo/tree/Checking-and-Mitigating-Risks)
